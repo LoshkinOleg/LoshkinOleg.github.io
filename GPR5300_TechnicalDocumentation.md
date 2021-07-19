@@ -4,3 +4,5 @@
 Testing stuff
 ## Rendering Pipeline
 Testing more stuff
+
+![Harse](../assets/harse.gif)
