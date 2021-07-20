@@ -67,10 +67,24 @@ Similarly, the same comparison is to be done for each of the side planes of the 
   <img width="600" height="480" src="../assets/frustum_sides.png">
 </p> 
 
-As you can see, this time if the projection of the blue vector on the red one is greater than zero, there's no way the object could be inside the frustum.
+As you can see, this time if the projection of the blue vector on the red one is greater than zero, there's no way the object could be inside the frustum. This time, the red vector is given by rotating the camera's Left vector by FOV/2 degrees counter-clockwise. This can easily be done using glm::angleAxis(radian, axis).
 
 ### Shape interpolation
-asd
+Shape interpolation is a very simple technique that allows a shape to be interpolated between two other shapes on the condition that the vertices of the two other shapes have a one-to-one correspondance:
+
+<p align="left">
+  <img width="500" height="440" src="../assets/morphing.png">
+</p>
+
+Here, we have two targets. One is a red pentagon with 5 vertices. The other a blue triangle with 5 vertices as well but two of them are located on the triangle's sides. If we pass these two sets of data to the vertex shader as well as an arbitrary interpolation factor, we can create a third shape, drawn here in black that is a mixture of the pentagram and the triangle.
+
+This was how the roof collapsing effect was done for the Half Life 2's E3 2003 tech demo: https://youtu.be/4ddJ1OKV63Q?t=112
+This very simple animation technique is still the foundation of Morph Target Animation, ubiquitous to nearly all modern game engines that can animate character expressions.
+
+<p align="left">
+  <img width="486" height="421" src="https://www.site.uottawa.ca/~wslee/SITEimages/diagonalView_AnimationVideo.gif">
+</p>
+
 ### Normalmapping
 asd
 ### Deferred shading
