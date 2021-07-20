@@ -54,6 +54,21 @@ This optimization should do little when the number of instances of a Model is sm
   <img width="1160" height="1378" src="../assets/dynamic_data_transfer.png">
 </p> 
 
+A list of instances to draw can be easily established thusly: only the instances whose position relative to the camera's position lays inside the camera's frustum need to be drawn. To know whether an object is within the frustum, all we need to do is examine the geometric projection of the object's position vector onto the vectors normal to the planes that make up the frustum. This is easilly comprehensible when considering the frustum's Z axis:
+
+<p align="left">
+  <img width="600" height="580" src="../assets/frustum_z.png">
+</p> 
+
+We can see that the object COULD only be within the frustum's bound only if the projection of the blue vector is greater than the Z coordinate of the near plane AND smaller than the Z coordinate of the far plane. The blue vector is given by: ObjectPosition - CameraPosition. The red vector is the Front vector of the camera.
+Similarly, the same comparison is to be done for each of the side planes of the frustum:
+
+<p align="left">
+  <img width="600" height="480" src="../assets/frustum_sides.png">
+</p> 
+
+As you can see, this time if the projection of the blue vector on the red one is greater than zero, there's no way the object could be inside the frustum.
+
 ### Shape interpolation
 asd
 ### Normalmapping
