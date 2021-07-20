@@ -48,3 +48,9 @@ void main()
 
 #### The particle system
 A bunch of stars are shown to fly up into the air in a "trumpet" like shape:
+
+<p align="left">
+  <img width="563" height="639" src="../assets/scene_particles.png">
+</p>
+
+This is done with some simple instancing and trigonometric functions. Each particle's position is updated every frame and the buffer containing the positions of all the particles is sent over to the GPU once per frame. An instancing command is then issued and the particles are drawn using the new positions.
