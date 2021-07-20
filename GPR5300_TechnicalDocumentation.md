@@ -79,7 +79,7 @@ Shape interpolation is a very simple technique that allows a shape to be interpo
 Here, we have two targets. One is a red pentagon with 5 vertices. The other a blue triangle with 5 vertices as well but two of them are located on the triangle's sides. If we pass these two sets of data to the vertex shader as well as an arbitrary interpolation factor, we can create a third shape, drawn here in black that is a mixture of the pentagram and the triangle.
 
 This was how the roof collapsing effect was done for the Half Life 2's E3 2003 tech demo: https://youtu.be/4ddJ1OKV63Q?t=112
-This very simple animation technique is still the foundation of Morph Target Animation, ubiquitous to nearly all modern game engines that can animate character expressions.
+This very simple animation technique is still the foundation of Morph Target Animation, ubiquitous to all modern game engines that can animate character expressions.
 
 <p align="left">
   <img width="486" height="421" src="https://www.site.uottawa.ca/~wslee/SITEimages/diagonalView_AnimationVideo.gif">
@@ -90,7 +90,26 @@ asd
 ### Deferred shading
 asd
 ### Bloom effect
-asd
+During the shading pass, a bloom effect is applied globally to the whole screen. The basic idea behind a bloom effect is simple: in addition to drawing the scene as usual, draw a copy of it onto a second texture but only the pixels that are brighter than some arbitrary value. Blur this second texture and combine it with the first result of the shading pass and you end up with something like this:
+
+<p align="left">
+  <img width="703" height="313" src="http://3.bp.blogspot.com/-xTb-8Z79dkY/Ux3J4DlfhnI/AAAAAAAACtw/2Ie_-aJlhuY/s1600/bloom.jpg">
+</p>
+
+The result is that light appears to bleed into it's surroundings and appears brighter than it actually is. While there's multiple ways to implement this effect, the differences lay in the way this second texture that only contains the bright colors is blurred. Some might perform the blurring effect per fragment, others write the texture back and forth between two framebuffers that reduce in size to then upscale the minified texture, or it is even possible to simply sample the unblurred texture from a smaller mipmap with the proper filtering parameters to obtain a blurring effect.
+In this engine's case, the method is very simple: During the post-processing pass, once all the shading has been performed once per pixel during the deferred shading pass, a simple mean blur is applied to the brights texture and then added to the post-process pass' result before tone mapping and gamma correction.
+```
+void main()
+{
+    vec3 result = MeanBlur();
+    result = ExtendedReinhard(result, MaxBrightness);
+    result = pow(result, vec3(1.0/GAMMA));
+    FragColor = vec4(result, 1.0);
+}
+```
+
+This gives satisfying results and simply adds a small extra step into the existing rendering pipeline without the need to switch render targets and without performing the blur on a per-fragment basis, everything written to the brights texture will be used for the final result.
+
 ### Shadow mapping
 asd
 
