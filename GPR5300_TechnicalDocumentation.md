@@ -28,15 +28,23 @@ These are the techniques used in the demo in no particular order:
 ### Instancing
 Instancing simply consists in re-using the same per-vertex data to draw multiple instances of a mesh in different places using a single draw call. This is the default behaviour of the engine. The only exception is the drawing of the skybox.
 
-INSERT IMG HERE: VAO VBO
+<p align="left">
+  <img width="960" height="523" src="../assets/instancing.png">
+</p>
+
 This technique comes in particularly handy for things like particle systems. In this demo, a single particle consists of a mesh of 3 intersecting planes with an alpha texture used to draw the shape of a star on each plane:
 
-INSERT IMG HERE: 
+<p align="left">
+  <img width="539" height="487" src="../assets/particle_mesh.png">
+</p> 
 
 This same mesh is simply instanced 512 times in my case: the per-vertex data is loaded into the GPU's memory once at initialization and the dynamic per-instance data of 3 floats representing the position of the mesh is transfered to the GPU once every frame, resulting in a total transfer of 6'144 bytes. Each particle is then colored in the fragment shader using it's gl_InstanceId as input to give them differing colors.
 The vertex shader input ends up therefore looking something like this:
 
-CODE HERE
+```
+layout (location = 0) in vec3 VertexPosition; // Changes for every vertex.
+layout (location = 1) in vec3 ModelPosition; // Changes for every instance.
+```
 
 ### Frustum culling
 asd
