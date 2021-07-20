@@ -23,11 +23,39 @@ The engine has been made to run reasonably (consistent 60 FPS) on the following 
 * GPU: [Nvidia GeForce 940M with 2[GB] of VRAM, with driver version ~466.47](https://www.techpowerup.com/gpu-specs/geforce-940m.c2643)
 * Microsoft Windows 10 Home x64, ~version 10.0.19042 .
 
+## Techniques used
+These are the techniques used in the demo in no particular order:
+### Instancing
+Instancing simply consists in re-using the same per-vertex data to draw multiple instances of a mesh in different places using a single draw call. This is the default behaviour of the engine. The only exception is the drawing of the skybox.
+
+INSERT IMG HERE: VAO VBO
+This technique comes in particularly handy for things like particle systems. In this demo, a single particle consists of a mesh of 3 intersecting planes with an alpha texture used to draw the shape of a star on each plane:
+
+INSERT IMG HERE: 
+
+This same mesh is simply instanced 512 times in my case: the per-vertex data is loaded into the GPU's memory once at initialization and the dynamic per-instance data of 3 floats representing the position of the mesh is transfered to the GPU once every frame, resulting in a total transfer of 6'144 bytes. Each particle is then colored in the fragment shader using it's gl_InstanceId as input to give them differing colors.
+The vertex shader input ends up therefore looking something like this:
+
+CODE HERE
+
+### Frustum culling
+asd
+### Shape interpolation
+asd
+### Normalmapping
+asd
+### Deferred shading
+asd
+### Bloom effect
+asd
+### Shadow mapping
+asd
+
 ## The Demo
 A .zip package is provided in the [release](https://github.com/LoshkinOleg/gameEngine/releases/tag/1) section of the repository containing a standalone demo that uses the rendering engine to showcase a simple scene.
 ### The demo's layout
-Once the demo is launched, the camera automatically moves along the world's Z axis in the -Z direction. The camera rotates to show each of the 5 elements in the scene as the scene progresses:
-#### The morphing horse
+Once the demo is launched, the camera automatically moves along the world's Z axis in the -Z direction. The camera rotates to show each of the 5 elements in the scene as the scene progresses. The whole demo lasts ~55 seconds and then resets.
+#### 1. The morphing horse
 A disembodied [horse's head](https://free3d.com/3d-model/a-horse-with-a-big-tush-498195.html) is shown to transition between it's default aspect and a "spherifyed" version of the mesh:
 
 <p align="left">
@@ -46,7 +74,7 @@ void main()
 }
 ```
 
-#### The particle system
+#### 2. The particle system
 A bunch of stars are shown to fly up into the air in a "trumpet" like shape:
 
 <p align="left">
@@ -55,7 +83,7 @@ A bunch of stars are shown to fly up into the air in a "trumpet" like shape:
 
 This is done with some simple instancing and trigonometric functions. Each particle's position is updated every frame and the buffer containing the positions of all the particles is sent over to the GPU once per frame. An instancing command is then issued and the particles are drawn using the new positions.
 
-#### The reflective diamond
+#### 3. The reflective diamond
 A spinning diamond is shown to reflect the skybox. The reflected color is boosted to make the diamond appear brighter and cause some blooming effect when the bright sky is reflected.
 
 <p align="left">
@@ -64,20 +92,29 @@ A spinning diamond is shown to reflect the skybox. The reflected color is booste
 
 The reflection is done via the use of glgl's built-in [reflect](https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/reflect.xhtml) function, the resulting reflection vector being used to sample the skybox's cubemap.
 
-#### The shadow casting spheres
+#### 4. The shadow casting spheres
 Three orbiting spheres are shown to cast shadows on each other as they orbit:
 
 <p align="left">
-  <img width="435" height="253" src="../assets/scene_diamond.png">
+  <img width="435" height="253" src="../assets/scene_spheres.png">
 </p>
 
 This is done via [shadowmapping](https://learnopengl.com/Advanced-Lighting/Shadows/Shadow-Mapping).
 
-#### The normalmapped cube
+#### 5. The normalmapped cube
 A brick textured cube is shown to reflect light according to a geometry that is more complex than that contained in it's .obj file:
 
 <p align="left">
-  <img width="428" height="370" src="../assets/scene_diamond.png">
+  <img width="428" height="370" src="../assets/scene_cube.png">
 </p>
 
 This is done via simple [normalmapping](https://learnopengl.com/Advanced-Lighting/Normal-Mapping).
+
+### The demo's execution flow
+The high level view of the program's flow is as such:
+
+<p align="left">
+  <img width="428" height="370" src="../assets/demo_flow.png">
+</p>
+
+## Conclusion
