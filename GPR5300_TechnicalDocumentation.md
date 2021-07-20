@@ -93,13 +93,13 @@ The rendering pass is separated between a geometry pass and a shading pass. The 
 The shading pass then takes these inputs as textures and computes the lighting for the whole screen, so no needless lighting computation is performed: all pixels thusly rendered are guaranteed to be the ones displayed on screen.
 
 <p align="left">
-  <img width="1165" height="834" src="../assets/deferred_albedo.png">
+  <img width="500" height="358" src="../assets/deferred_albedo.png">
 </p>
 <p align="left">
-  <img width="1165" height="834" src="../assets/deferred_positions.png">
+  <img width="500" height="358" src="../assets/deferred_positions.png">
 </p>
 <p align="left">
-  <img width="1165" height="834" src="../assets/deferred_normals.png">
+  <img width="500" height="358" src="../assets/deferred_normals.png">
 </p>
 
 ### Bloom effect
@@ -199,5 +199,5 @@ This is done via simple [normalmapping](https://learnopengl.com/Advanced-Lightin
 The high level view of the program's flow is as such:
 
 <p align="left">
-  <img width="760" height="1380" src="../assets/demo_flow.png">
+  <img width="500" height="907" src="../assets/demo_flow.png">
 </p>
