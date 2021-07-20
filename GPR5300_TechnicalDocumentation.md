@@ -29,4 +29,5 @@ A .zip package is provided in the [release](https://github.com/LoshkinOleg/gameE
 Once the demo is launched, the camera automatically moves along the world's Z axis in the -Z direction. The camera rotates to show each of the 5 elements in the scene as the scene progresses:
 #### The morphing horse
 A disembodied [horse's head](https://free3d.com/3d-model/a-horse-with-a-big-tush-498195.html) is shown to transition between it's default aspect and a "spherifyed" version of the mesh:
+
 ![Scene Horse](../assets/scene_horse.gif)
