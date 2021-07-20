@@ -23,7 +23,7 @@ The engine has been made to run reasonably (consistent 60 FPS) on the following 
 * GPU: [Nvidia GeForce 940M with 2[GB] of VRAM, with driver version ~466.47](https://www.techpowerup.com/gpu-specs/geforce-940m.c2643)
 * Microsoft Windows 10 Home x64, ~version 10.0.19042 .
 
-## The demo
+## The Demo
 A .zip package is provided in the [release](https://github.com/LoshkinOleg/gameEngine/releases/tag/1) section of the repository containing a standalone demo that uses the rendering engine to showcase a simple scene.
 ### The demo's layout
 Once the demo is launched, the camera automatically moves along the world's Z axis in the -Z direction. The camera rotates to show each of the 5 elements in the scene as the scene progresses:
@@ -54,3 +54,30 @@ A bunch of stars are shown to fly up into the air in a "trumpet" like shape:
 </p>
 
 This is done with some simple instancing and trigonometric functions. Each particle's position is updated every frame and the buffer containing the positions of all the particles is sent over to the GPU once per frame. An instancing command is then issued and the particles are drawn using the new positions.
+
+#### The reflective diamond
+A spinning diamond is shown to reflect the skybox. The reflected color is boosted to make the diamond appear brighter and cause some blooming effect when the bright sky is reflected.
+
+<p align="left">
+  <img width="337" height="273" src="../assets/scene_diamond.png">
+</p>
+
+The reflection is done via the use of glgl's built-in [reflect](https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/reflect.xhtml) function, the resulting reflection vector being used to sample the skybox's cubemap.
+
+#### The shadow casting spheres
+Three orbiting spheres are shown to cast shadows on each other as they orbit:
+
+<p align="left">
+  <img width="435" height="253" src="../assets/scene_diamond.png">
+</p>
+
+This is done via [shadowmapping](https://learnopengl.com/Advanced-Lighting/Shadows/Shadow-Mapping).
+
+#### The normalmapped cube
+A brick textured cube is shown to reflect light according to a geometry that is more complex than that contained in it's .obj file:
+
+<p align="left">
+  <img width="428" height="370" src="../assets/scene_diamond.png">
+</p>
+
+This is done via simple [normalmapping](https://learnopengl.com/Advanced-Lighting/Normal-Mapping).
