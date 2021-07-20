@@ -199,5 +199,5 @@ This is done via simple [normalmapping](https://learnopengl.com/Advanced-Lightin
 The high level view of the program's flow is as such:
 
 <p align="left">
-  <img width="428" height="370" src="../assets/demo_flow.png">
+  <img width="760" height="1380" src="../assets/demo_flow.png">
 </p>
