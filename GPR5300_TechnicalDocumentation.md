@@ -108,7 +108,7 @@ void main()
 }
 ```
 
-This gives satisfying results and simply adds a small extra step into the existing rendering pipeline without the need to switch render targets and without performing the blur on a per-fragment basis, everything written to the brights texture will be used for the final result.
+This gives satisfying results and simply adds a small extra step into the existing rendering pipeline without the need to switch render targets, without generating mipmaps and without performing the blur on a per-fragment basis, everything written to the brights texture will be used for the final result.
 
 ### Shadow mapping
 asd
