@@ -47,7 +47,13 @@ layout (location = 1) in vec3 ModelPosition; // Changes for every instance.
 ```
 
 ### Frustum culling
-asd
+Although the scene is simple enough not to warrant an such an optimization, every time a Model is drawn, the user is given the option to perform a culling pass using the camera's frustum to determine which instances of the Model need to be updated and displayed. In the case of this engine the use of this pass is less to limit the number of draw calls, as with instancing this isn't an issue, but rather to limit the amount of dynamic data that needs to be transferred to the GPU every frame.
+This optimization should do little when the number of instances of a Model is small as the most lengthy operation in such a scenario would be the wait on the GPU, but should get more effective as the number of instances grow. The larger the size of the dynamic data's structure, the more effective this approach should be as well (ex: mat4: 16 bytes vs. vec3: 4 bytes).
+
+<p align="left">
+  <img width="1160" height="1378" src="../assets/dynamic_data_transfer.png">
+</p> 
+
 ### Shape interpolation
 asd
 ### Normalmapping
