@@ -30,7 +30,7 @@ Once the demo is launched, the camera automatically moves along the world's Z ax
 #### The morphing horse
 A disembodied [horse's head](https://free3d.com/3d-model/a-horse-with-a-big-tush-498195.html) is shown to transition between it's default aspect and a "spherifyed" version of the mesh:
 
-![Scene Horse](../assets/scene_horse.gif)
+![horse](../assets/scene_horse.gif)
 
 This is a demonstration of [shape interpolation](https://en.wikipedia.org/wiki/Morph_target_animation), a very simple technique where the values of a vertex are interpolated between two shapes with the exact same amount of vertices. The vertex shader simply interpolated between the two vertices to obtain the final vertex:
 
