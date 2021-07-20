@@ -29,9 +29,9 @@ A .zip package is provided in the [release](https://github.com/LoshkinOleg/gameE
 Once the demo is launched, the camera automatically moves along the world's Z axis in the -Z direction. The camera rotates to show each of the 5 elements in the scene as the scene progresses:
 #### The morphing horse
 A disembodied [horse's head](https://free3d.com/3d-model/a-horse-with-a-big-tush-498195.html) is shown to transition between it's default aspect and a "spherifyed" version of the mesh:
-<p align="left">
-  <img width="256" height="256" src="../assets/scene_horse.gif">
-</p>
+
+![Scene Horse](../assets/scene_horse.gif)
+
 This is a demonstration of [shape interpolation](https://en.wikipedia.org/wiki/Morph_target_animation), a very simple technique where the values of a vertex are interpolated between two shapes with the exact same amount of vertices. The vertex shader simply interpolated between the two vertices to obtain the final vertex:
 
 ```
