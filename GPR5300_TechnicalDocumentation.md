@@ -48,7 +48,7 @@ layout (location = 1) in vec3 ModelPosition; // Changes for every instance.
 
 ### Frustum culling
 Although the scene is simple enough not to warrant an such an optimization, every time a Model is drawn, the user is given the option to perform a culling pass using the camera's frustum to determine which instances of the Model need to be updated and displayed. In the case of this engine the use of this pass is less to limit the number of draw calls, as with instancing this isn't an issue, but rather to limit the amount of dynamic data that needs to be transferred to the GPU every frame.
-This optimization should do little when the number of instances of a Model is small as the most lengthy operation in such a scenario would be the wait on the GPU, but should get more effective as the number of instances grow. The larger the size of the dynamic data's structure, the more effective this approach should be as well (ex: mat4: 16 bytes vs. vec3: 4 bytes).
+This optimization should do little when the number of instances of a Model is small as the most lengthy operation in such a scenario would be the wait on the GPU, but should get more effective as the number of instances grow.
 
 <p align="left">
   <img width="1160" height="1378" src="../assets/dynamic_data_transfer.png">
@@ -86,9 +86,22 @@ This very simple animation technique is still the foundation of Morph Target Ani
 </p>
 
 ### Normalmapping
-asd
+All objects in the scene that are shaded using the Blinn-Phong's lighting model are using a normal map: a texture that instead of colors contains the xyz components of a vector that would be normal to the surface of the object at it's texture coordinate. Using these normals instead of the ones generated from the .obj's data gives us a much better resolution of the object's surface at very little cost.
+
 ### Deferred shading
-asd
+The rendering pass is separated between a geometry pass and a shading pass. The geometry pass gathers all the data relevant for computing the lighting and writes it to 4 separate targets: one for a fragment's albedo, one for it's position, one for it's normal and one for the material's shininess.
+The shading pass then takes these inputs as textures and computes the lighting for the whole screen, so no needless lighting computation is performed: all pixels thusly rendered are guaranteed to be the ones displayed on screen.
+
+<p align="left">
+  <img width="1165" height="834" src="../assets/deferred_albedo.png">
+</p>
+<p align="left">
+  <img width="1165" height="834" src="../assets/deferred_positions.png">
+</p>
+<p align="left">
+  <img width="1165" height="834" src="../assets/deferred_normals.png">
+</p>
+
 ### Bloom effect
 During the shading pass, a bloom effect is applied globally to the whole screen. The basic idea behind a bloom effect is simple: in addition to drawing the scene as usual, draw a copy of it onto a second texture but only the pixels that are brighter than some arbitrary value. Blur this second texture and combine it with the first result of the shading pass and you end up with something like this:
 
@@ -111,7 +124,17 @@ void main()
 This gives satisfying results and simply adds a small extra step into the existing rendering pipeline without the need to switch render targets, without generating mipmaps and without performing the blur on a per-fragment basis, everything written to the brights texture will be used for the final result.
 
 ### Shadow mapping
-asd
+This demo also has three brick textured spheres that cast shadows on each other. To achieve this, a simple shadow map for a directional light was used.
+The idea is simple: draw the scene once before the lighting pass and keep only the depth values but with the scene seen from the directional light's point of view. Once at the shading stage, compare the pixel's current depth value with the one stored in the shadow map. If the fragment's current depth as seen from the light's perspective is greater than the one that is stored in the depth map at the same location, it means that the current fragment is in shadow.
+
+
+<p align="left">
+  <img width="240" height="210" src="../assets/shadowmap.png">
+</p>
+
+<p align="left">
+  <img width="435" height="253" src="../assets/scene_spheres.png">
+</p>
 
 ## The Demo
 A .zip package is provided in the [release](https://github.com/LoshkinOleg/gameEngine/releases/tag/1) section of the repository containing a standalone demo that uses the rendering engine to showcase a simple scene.
@@ -178,5 +201,3 @@ The high level view of the program's flow is as such:
 <p align="left">
   <img width="428" height="370" src="../assets/demo_flow.png">
 </p>
-
-## Conclusion
