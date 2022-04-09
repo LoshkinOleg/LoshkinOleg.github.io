@@ -1,5 +1,3 @@
-# OpenGL Enums Cheat Sheet
-
 ## Some Context
 
 As part of the 3rd bachelor year’s curriculum, students of the Games Programming section of the school are tasked with creating a video-game over the span of 7 months (end of september to end of april).
