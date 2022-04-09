@@ -2,6 +2,7 @@
 
 As part of the 3rd bachelor year’s curriculum, students of the Games Programming section of the school are tasked with creating a video-game over the span of 7 months (end of september to end of april).
 During the scholar year of 2021 to 2022, the school, along with the support of its students, has organised a collaboration between the Game Programming, Game Art and Sound Engineering students which resulted in the project that culminated in the creation of Voliday, a city builder wholly created using the video-games’ industry’s standard tools.
+
 This collaboration ended up involving 39 people across the school sections mentioned above, and I had taken up the role of Project Lead. The Game Programming students acted as internal clients for the other teams of the project, establishing specifications and validating the work done by our teammates.
 
 This was my first experience having to organise this many people, the biggest team I had to work with beforehand being composed of 4 people.
@@ -13,8 +14,8 @@ Such a project had presented us with many challenges I had little to no experien
 
 Firstly, in such a large team, good communication is absolutely critical. The most crucial tool to ensure a common vision of the project turned out to be copious and reasonably well designed presentations (we’ve used Google Slides for creating those). Below in an example of an opening slide we’ve used to explain the game design of our game to François Dumas, Ubisoft’s Audio Director who had the kindness to give the Sound Engineering Team a tailored month long course on the subject of audio production for video-games using Wwise:
 
-<p align="left">
-  <img width="1883" height="1046" src="../assets/presForDumas.png">
+<p align="center">
+  <img width="500" height="278" src="../assets/presForDumas.png">
 </p>
 
 I will not go as far as saying that our presentations were flawless, but in the vast majority of situations they were an invaluable support to convey our idas to various people in a concise way, and thanks to Julien Kobler, the creator of the visual assets we’ve used, in a visually pleasing way as well.
@@ -37,11 +38,12 @@ This basic constraint has forced the team members in positions of leadership, my
 
 I certainly do not pretend to be a very empathic leader (nor a very good leader for that matter), but this experience has definitely made me much more aware of other people’s experiences and showed me well the importance of empathy when working in a team, as well as exercise extensively my sense of empathy.
 
-<p align="left">
-  <img width="800" height="533" src="../assets/Boss-Vs-Leader-Quotes.jpg">
+<p align="center">
+  <img width="500" height="333" src="../assets/Boss-Vs-Leader-Quotes.jpg">
 </p>
 
-I do wish to issue a warning however: in trying to motivate people by leading by example, one must not accumulate too many responsibilities, as ended up happening in my case. Our situation was a lucky one since the responsibilities I ended up picking up then slowly re-delegating to my teammates were ones I was able to reasonably fulfil thanks to my personal circumstances but such an approach is simply not viable in most cases. If you wish to read on it further, I’m leaving here a well put together blogpost explaining the concept of the “Hero Syndrome” in greater detail: https://www.linkedin.com/pulse/hero-syndrome-work-place-lance-charlton
+I do wish to issue a warning however: in trying to motivate people by leading by example, one must not accumulate too many responsibilities, as ended up happening in my case. Our situation was a lucky one since the responsibilities I ended up picking up then slowly re-delegating to my teammates were ones I was able to reasonably fulfil thanks to my personal circumstances but such an approach is simply not viable in most cases. If you wish to read on it further, I’m leaving here a well put together blogpost explaining the concept of the “Hero Syndrome” in greater detail:
+https://www.linkedin.com/pulse/hero-syndrome-work-place-lance-charlton
 
 ## Key Challenges: Working Together
 
@@ -53,8 +55,8 @@ Thirdly, discarding or replacing someone’s work is obviously terrible for moti
 All of these considerations are subtle for someone working under stress which is why it is that much more important to avoid the “Hero Syndrome” as accumulating responsibilities will lead not only to potential ego conflicts but also to the diminishing of time allocated to each assumed responsibility, increasing the risk of the above situation occurring.
 One must always be mindful of the individual goals of one’s own teammates for the project to progress in a healthy way.
 
-<p align="left">
-  <img width="547" height="437" src="../assets/projectDirection.png">
+<p align="center">
+  <img width="500" height="400" src="../assets/projectDirection.png">
 </p>
 
 ## Conclusion
