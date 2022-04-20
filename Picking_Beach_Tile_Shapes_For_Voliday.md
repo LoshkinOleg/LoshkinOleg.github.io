@@ -53,44 +53,44 @@ More states were originally used until I realized that they were redondant.
 
 With the adjacency data laid out in this way, I could implement the following algorithm to compute the correct mesh and rotation to pick for any given tile T within a neighborhood N:
 
-T := current tile
-N := 3x3 neighborhood of tiles centered on T
-nW := number of water tiles in N
-nG := number of ground tiles in N
-BR := bottom right tile of the neighborhood
-BM := bottom middle tile of the neighborhood
-BL := bottom left tile of the neighborhood
-MR := middle right tile of the neighborhood
-MM := middle middle tile of the neighborhood
-ML := middle left tile of the neighborhood
-TR := top right tile of the neighborhood
-TM := top middle tile of the neighborhood
-TL := top left tile of the neighborhood
+T := current tile\n
+N := 3x3 neighborhood of tiles centered on T\n
+nW := number of water tiles in N\n
+nG := number of ground tiles in N\n
+BR := bottom right tile of the neighborhood\n
+BM := bottom middle tile of the neighborhood\n
+BL := bottom left tile of the neighborhood\n
+MR := middle right tile of the neighborhood\n
+MM := middle middle tile of the neighborhood\n
+ML := middle left tile of the neighborhood\n
+TR := top right tile of the neighborhood\n
+TM := top middle tile of the neighborhood\n
+TL := top left tile of the neighborhood\n
 
-if (nW is 2) OR (2*nW is nG AND ((BM and TM are ground) OR (MR and ML are ground))):
-    set T to slope
-    if ML is water:
-        rotate T by 90°
-    elif TM is water:
-        rotate T by 180°
-    elif MR is water:
-        rotate T by 270°
-elif nW is not 1:
-    set T to external corner
-    if ML and TM are ground:
-        rotate T by 270°
-    elif BM and MR are ground:
-        rotate T by 90°
-    elif ML and BM are ground:
-        rotate T by 180°
-else:
-    set T to internal corner
-    if TL is water:
-        rotate T by 90°
-    elif TR is water:
-        rotate T by 180°
-    elif BR is water:
-        rotate T by 270°
+if (nW is 2) OR (2*nW is nG AND ((BM and TM are ground) OR (MR and ML are ground))):\n
+    set T to slope\n
+    if ML is water:\n
+        rotate T by 90°\n
+    elif TM is water:\n
+        rotate T by 180°\n
+    elif MR is water:\n
+        rotate T by 270°\n
+elif nW is not 1:\n
+    set T to external corner\n
+    if ML and TM are ground:\n
+        rotate T by 270°\n
+    elif BM and MR are ground:\n
+        rotate T by 90°\n
+    elif ML and BM are ground:\n
+        rotate T by 180°\n
+else:\n
+    set T to internal corner\n
+    if TL is water:\n
+        rotate T by 90°\n
+    elif TR is water:\n
+        rotate T by 180°\n
+    elif BR is water:\n
+        rotate T by 270°\n
 
 Let’s detail the “if (nW is 2) OR (2*nW is nG AND ((BM and TM are ground) OR (MR and ML are ground)))” part of the algorithm. If this condition is true, the mesh of the tile is set to that of a slope.
 
