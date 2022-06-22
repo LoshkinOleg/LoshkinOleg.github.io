@@ -11,3 +11,5 @@
 ## [Managing Voliday: The Technical Aspect](https://LoshkinOleg.github.io/Managing_Voliday_The_Technical_Aspect)
 
 ## [Picking Beach Tile Shapes For Voliday](https://LoshkinOleg.github.io/Picking_Beach_Tile_Shapes_For_Voliday)
+
+## [Interview with Dr. Hasan Baran Firat](https://LoshkinOleg.github.io/Interview_With_Dr_Hasan_Baran_Firat)
