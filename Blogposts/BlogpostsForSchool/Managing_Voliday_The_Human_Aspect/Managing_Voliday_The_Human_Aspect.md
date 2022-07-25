@@ -15,7 +15,7 @@ Such a project had presented us with many challenges I had little to no experien
 Firstly, in such a large team, good communication is absolutely critical. The most crucial tool to ensure a common vision of the project turned out to be copious and reasonably well designed presentations (we’ve used Google Slides for creating those). Below in an example of an opening slide we’ve used to explain the game design of our game to François Dumas, Ubisoft’s Audio Director who had the kindness to give the Sound Engineering Team a tailored month long course on the subject of audio production for video-games using Wwise:
 
 <p align="center">
-  <img width="500" height="278" src="../assets/presForDumas.png">
+  <img width="500" height="278" src="presForDumas.png">
 </p>
 
 I will not go as far as saying that our presentations were flawless, but in the vast majority of situations they were an invaluable support to convey our idas to various people in a concise way, and thanks to Julien Kobler, the creator of the visual assets we’ve used, in a visually pleasing way as well.
@@ -39,7 +39,7 @@ This basic constraint has forced the team members in positions of leadership, my
 I certainly do not pretend to be a very empathic leader (nor a very good leader for that matter), but this experience has definitely made me much more aware of other people’s experiences and showed me well the importance of empathy when working in a team, as well as exercise extensively my sense of empathy.
 
 <p align="center">
-  <img width="500" height="333" src="../assets/Boss-Vs-Leader-Quotes.jpg">
+  <img width="500" height="333" src="Boss-Vs-Leader-Quotes.jpg">
 </p>
 
 I do wish to issue a warning however: in trying to motivate people by leading by example, one must not accumulate too many responsibilities, as ended up happening in my case. Our situation was a lucky one since the responsibilities I ended up picking up then slowly re-delegating to my teammates were ones I was able to reasonably fulfil thanks to my personal circumstances but such an approach is simply not viable in most cases. If you wish to read on it further, I’m leaving here a well put together blogpost explaining the concept of the “Hero Syndrome” in greater detail:
@@ -56,7 +56,7 @@ All of these considerations are subtle for someone working under stress which is
 One must always be mindful of the individual goals of one’s own teammates for the project to progress in a healthy way.
 
 <p align="center">
-  <img width="500" height="400" src="../assets/projectDirection.png">
+  <img width="500" height="400" src="projectDirection.png">
 </p>
 
 ## Conclusion

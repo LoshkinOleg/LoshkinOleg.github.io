@@ -5,21 +5,21 @@ https://volcanoteam.itch.io/
 
 The island’s beach tiles bordering water needed to be visually consistent with the geometry of the island as demonstrated below:
 <p align="center">
-  <img width="500" height="232" src="../assets/shoreline.png">
+  <img width="500" height="232" src="shoreline.png">
 </p>
 
 This means that any given beach tile could take one of the following aspects:
 1. A slope
 <p align="center">
-  <img width="500" height="455" src="../assets/slope.png">
+  <img width="500" height="455" src="slope.png">
 </p>
 2. An external corner
 <p align="center">
-  <img width="478" height="500" src="../assets/externCorner.png">
+  <img width="478" height="500" src="externCorner.png">
 </p>
 3. Or an internal corner
 <p align="center">
-  <img width="500" height="466" src="../assets/internCorner.png">
+  <img width="500" height="466" src="internCorner.png">
 </p>
 
 For the sake of simplicity, beach tiles cannot be full cubes, they can only border water.
@@ -27,26 +27,26 @@ For the sake of simplicity, beach tiles cannot be full cubes, they can only bord
 My need was to represent the following diagram representing a “neighborhood” of the grid with a struct.
 
 <p align="center">
-  <img width="500" height="500" src="../assets/neighborhood.png">
+  <img width="500" height="500" src="neighborhood.png">
 </p>
 
 Below is the declaration of a struct composed of 9 GridCell references. GridCells hold a variable that defines the tile’s terrain type.
 I have arranged the references in this order to mirror how a 2D for loop would traverse the grid: from (-X;-Y) to (+X;+Y). Since Unreal Engine uses the left hand rule for its XYZ coordinates with the +Z vector pointing UP, this results in the order shown below.
 
 <p align="center">
-  <img width="500" height="419" src="../assets/gridNeighborhood.png">
+  <img width="500" height="419" src="gridNeighborhood.png">
 </p>
 
 Additionally, I needed to transform this list of labeled references to a more useful data structure I would be able to work with more intuitively. So from this single neighborhood struct containing references to GridCells, I’ve created another struct, ordered in the same exact way that only contains the data determining whether the tile is a ground or water tile since this is the only determining factor:
 
 <p align="center">
-  <img width="500" height="419" src="../assets/gridNeighborhoodAdjacencies.png">
+  <img width="500" height="419" src="gridNeighborhoodAdjacencies.png">
 </p>
 
 In hindsight, I could have simply used the boolean type instead of a custom enum since the resulting enum can only ever have one of two states:
 
 <p align="center">
-  <img width="500" height="300" src="../assets/eGridAdjacency.png">
+  <img width="500" height="300" src="eGridAdjacency.png">
 </p>
 
 More states were originally used until I realized that they were redondant.
@@ -97,26 +97,26 @@ Let’s detail the “if (nW is 2) OR (2*nW is nG AND ((BM and TM are ground) OR
 Let’s start with the “(nW is 2)” part. If the number of water tiles within the neighborhood is 2, in the case of our game, that means that the mesh of the tile must be a slope. Consider the following cases:
 
 <p align="center">
-  <img width="500" height="226" src="../assets/adjacency0.png">
+  <img width="500" height="226" src="adjacency0.png">
 </p>
 
 All of these are encountered in our game and for all of them C must be a slope mesh, rotated one way or another.
 Here are some more neighborhood layouts that also fulfill this condition, however none of them are encountered in our game, so this isn’t a problem.
 
 <p align="center">
-  <img width="500" height="229" src="../assets/adjacency1.png">
+  <img width="500" height="229" src="adjacency1.png">
 </p>
 
 Next, let’s explain “(2*nW is nG AND ((BM and TM are ground) OR (MR and ML are ground))”. Let’s start by considering the evaluation “2*nW is nG”. If the number of ground tiles is twice that of water tiles (or conversely the number of water tiles is half that of ground tiles, but a multiplication is generally a simpler operation for a computer), that means we could potentially be in the following situations:
 
 <p align="center">
-  <img width="500" height="107" src="../assets/adjacency2.png">
+  <img width="500" height="107" src="adjacency2.png">
 </p>
 
 In all of them, we would like C to take the shape of a slope. However, if we left the condition as is, it would also attribute the slope shape to the following situations that do occur in our game:
 
 <p align="center">
-  <img width="500" height="105" src="../assets/adjacency3.png">
+  <img width="500" height="105" src="adjacency3.png">
 </p>
 
 Therefore, we need to restrict our condition to only let the right cases pass. I’ve done so with the remaining part of the conditional: “((BM and TM are ground) OR (MR and ML are ground))”.
@@ -128,7 +128,7 @@ With this deceivingly obtuse part of the algorithm explained, the rest is straig
 There is one detail left to explain. The “elif nW is not 1” part of the algorithm. If the algorithm has arrived at this condition, it means that C cannot be a slope. All that is left is either the external or the internal corner shape to pick. But how do we know which one? Consider the following situations:
 
 <p align="center">
-  <img width="500" height="229" src="../assets/adjacency4.png">
+  <img width="500" height="229" src="adjacency4.png">
 </p>
 
 For all of these, the correct shape for C is either an internal or an external corner. However, we can see that only for the cases where the number of water tiles is not 1 should the shape be that of an external tile. The rest must by deduction be internal tiles.
