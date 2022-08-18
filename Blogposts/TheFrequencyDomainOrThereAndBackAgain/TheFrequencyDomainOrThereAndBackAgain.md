@@ -542,12 +542,18 @@ This deceivingly "complicated" tool has revolutionized many domains of science a
 
 This is of course only the start, and there’s plenty of things left to explore on your own now that you understand the basics, even in the functions we’ve implemented here together.
 I invite you to explore these questions for yourself to better understand what’s going on:
-	1. What happens if the sizes of the time-domain signal and the frequency-domain signal are mismatched?
-	2. Knowing what you do now, can you construct a frequency-domain signal yourself that would result in an arbitrary pure tone of your choice? You can use the synthesizedFreqDomain and synthesizedTimeDomainFromDFT vectors to try that out.
-	3. How would you go about making the same transformations we’ve done together but applied to a pure tone sound signal that lasts 2 seconds instead of 1? What about one that lasts 30 seconds?
-	4. How does varying the sampling rate affect the result of the DFT? Should it?
-	5. Can you think of ways to make the computation of the DFT and IDFT more optimized without looking into how the FFT and IFFT works?
-	6. What happens if instead of working with a pure tone as has been the case here, you work with complex sound? A ⅓ to ⅔ mixture of a 440 Hz and a 880 Hz signals for instance?
+
+1. What happens if the sizes of the time-domain signal and the frequency-domain signal are mismatched?
+
+2. Knowing what you do now, can you construct a frequency-domain signal yourself that would result in an arbitrary pure tone of your choice? You can use the synthesizedFreqDomain and synthesizedTimeDomainFromDFT vectors to try that out.
+
+3. How would you go about making the same transformations we’ve done together but applied to a pure tone sound signal that lasts 2 seconds instead of 1? What about one that lasts 30 seconds?
+
+4. How does varying the sampling rate affect the result of the DFT? Should it?
+
+5. Can you think of ways to make the computation of the DFT and IDFT more optimized without looking into how the FFT and IFFT works?
+
+6. What happens if instead of working with a pure tone as has been the case here, you work with complex sound? A ⅓ to ⅔ mixture of a 440 Hz and a 880 Hz signals for instance?
 
 The visualizer provided as part of this blogpost will hopefully make it less frustrating to explore these questions, but if you do encounter some bugs or don’t understand some behavior of the code, do feel free to poke around in it, everything has been properly commented to help you understand how the visualizer works.
 
