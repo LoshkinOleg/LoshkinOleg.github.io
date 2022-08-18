@@ -2,5 +2,5 @@ remote_theme: pages-themes/hacker@v0.2.0
 plugins:
 - jekyll-remote-theme
 title: [Oleg Loshkin's Blog]
-description: [I am Oleg Loshkin, a proactive and self-reliant junior game programmer specializing in audio programming. I have graduated from the Geneva SAE Institute with a Bachelor of Science in Games Programming and wrote my bachelor thesis thesis on binaural sound spatialization.]
+description: [I am Oleg Loshkin, a proactive and self-reliant junior game programmer specializing in audio programming. I have graduated from the Geneva SAE Institute with a Bachelor of Science in Games Programming and wrote my bachelor thesis on binaural sound spatialization.]
 show_downloads: [false]
