@@ -8,7 +8,7 @@
 ### 2022.06.15 [Interview with Dr. Hasan Baran Firat](https://LoshkinOleg.github.io/Interviews/Interview_With_Dr_Hasan_Baran_Firat/Interview_With_Dr_Hasan_Baran_Firat)
 
 # Blogposts
-### WIP [DFT for Game Programmers (that suck at math)](https://LoshkinOleg.github.io/Blogposts/DFT_for_Game_Programmers/DFT_for_Game_Programmers)
+### 2022.08.19 [The Frequency Domain: Or, There and Back Again](https://LoshkinOleg.github.io/Blogposts/TheFrequencyDomainOrThereAndBackAgain/TheFrequencyDomainOrThereAndBackAgain)
 
 ## Blogposts made for school
 ### 2022.05.01 [Managing Voliday: The Human Aspect](https://LoshkinOleg.github.io/Blogposts/BlogpostsForSchool/Managing_Voliday_The_Human_Aspect/Managing_Voliday_The_Human_Aspect)
