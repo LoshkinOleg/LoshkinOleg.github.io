@@ -7,6 +7,9 @@
 # Interviews
 ### 2022.06.15 [Interview with Dr. Hasan Baran Firat](https://LoshkinOleg.github.io/Interviews/Interview_With_Dr_Hasan_Baran_Firat/Interview_With_Dr_Hasan_Baran_Firat)
 
+# Academic papers
+### 2022.07.31 [Bachelor of Science Thesis: Measuring the Impact of Rea-Time Binaural Sound Spatialization on Sound Localization.](https://github.com/LoshkinOleg/BachelorMPOleg)
+
 # Blogposts
 ### 2022.08.19 [The Frequency Domain: Or, There and Back Again](https://LoshkinOleg.github.io/Blogposts/TheFrequencyDomainOrThereAndBackAgain/TheFrequencyDomainOrThereAndBackAgain)
 
