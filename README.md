@@ -1,3 +1,5 @@
+# [Curriculum Vitae](https://LoshkinOleg.github.io/CV_OlegLoshkin.pdf)
+
 # Games
 ### 2022.06.30 [Voliday](https://volcanoteam.itch.io/voliday)
 ### 2018.11.01 [The Paratroopers 2](https://loshkinoleg.itch.io/the-paratroopers-2)
