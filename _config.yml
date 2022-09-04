@@ -61,7 +61,7 @@ sass:
 plugins:
   - jekyll-feed
   - jekyll-remote-theme
-  # - jekyll-soopr-seo-tag
+  # - jekyll-seo-tag
 
 # Exclude from processing.
 # The following items will not be processed, by default.
