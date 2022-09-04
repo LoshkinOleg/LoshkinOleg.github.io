@@ -1,0 +1,41 @@
+projects_entries:
+  - title: 2022-08-19 DFT and Frequency Domain Sandbox
+    url: https://github.com/LoshkinOleg/DFT_There_And_Back_Again
+    desc: "Application used in the blogpost The Frequency Domain: Or, There and Back Again. Allows you to construct time and frequency domain signals and visualize them in 3D."
+
+  - title: 2022-06-30 Voliday
+    url: https://volcanoteam.itch.io/voliday
+    desc: An 8-month student project involving >32 people, including Game Programming, Game Art and Sound Engineering students from the SAE Institute of Geneva. I've acted as the Project Lead for this project.
+
+  - title: 2018-11-01 The Paratroppers 2
+    url: https://loshkinoleg.itch.io/the-paratroopers-2
+    desc: The final game made during the Game Design module of the SAE's course. Made with Unity.
+
+  - title: 2018-10-01 The Paratroppers
+    url: https://loshkinoleg.itch.io/the-paratroopers-1
+    desc: A game made during the Game Design module of the SAE's course. Made with Unity.
+
+  - title: 2018-10-01 Winter Rush
+    url: https://loshkinoleg.itch.io/winter-rush
+    desc: A game made during the Game Design module of the SAE's course. Made with Unity.
+
+blogposts_entries:
+  - title: Blog posts
+    post_list: true
+    url: false
+
+cheatsheets_entries:
+  - title: CMakeLists Cheatsheet
+    url: cheatsheets/CMakeLists_Cheatsheet
+
+  - title: OpenGL Enums Cheatsheet
+    url: cheatsheets/OpenGL_Enums_Cheatsheet
+
+academic_publications_entries:
+  - title: "Bachelor of Science Thesis: Measuring the Impact of Rea-Time Binaural Sound Spatialization on Sound Localization."
+    url: http://github.com/LoshkinOleg/BachelorMPOleg/blob/master/ThesisFinal.pdf
+
+interviews_entries:
+  - title: 2022.06.15 Interview with Dr. Hasan Baran Firat on Real-Time Sound Spatialization in VR
+    url: interviews/Interview_With_Dr_Hasan_Baran_Firat
+    desc: Summary of the interview done as part of my Bachelor Thesis with Dr.Hasan Baran Firat.

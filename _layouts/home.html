@@ -1,0 +1,34 @@
+---
+layout: default
+---
+
+<header>
+    <h1>{{ site.title }}</h1>
+    {% if site.theme_config.show_description == true %}
+    <p>{{ site.description }}</p>
+    {% endif %}
+</header>
+
+{{ content }}
+
+<h2>{{ site.theme_config.home.title_projects }}</h2>
+{% include card_list.html collection=site.data.home.projects_entries %}
+
+<h2>{{ site.theme_config.home.title_academic_publications }}</h2>
+{% include vertical_list.html collection=site.data.home.academic_publications_entries %}
+
+<h2>{{ site.theme_config.home.title_blogposts }}</h2>
+{% include post_list.html %}
+
+<h2>{{ site.theme_config.home.title_interviews }}</h2>
+{% include vertical_list.html collection=site.data.home.interviews_entries %}
+
+<h2>{{ site.theme_config.home.title_cheatsheets }}</h2>
+{% include vertical_list.html collection=site.data.home.cheatsheets_entries %}
+
+{% if site.theme_config.show_footer == true %}
+<footer>
+    <div class="dashed"></div>
+    {% include horizontal_list.html collection=site.data.home.footer_entries %}
+</footer>
+{% endif %}

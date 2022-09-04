@@ -1,6 +1,84 @@
-remote_theme: pages-themes/hacker@v0.2.0
+# Welcome to Jekyll!
+#
+# This config file is meant for settings that affect your whole blog, values
+# which you are expected to set up once and rarely edit after that. If you find
+# yourself editing this file very often, consider using Jekyll's data files
+# feature for the data you need to update frequently.
+#
+# For technical reasons, this file is *NOT* reloaded automatically when you use
+# 'bundle exec jekyll serve'. If you change this file, please restart the server process.
+#
+# If you need help with YAML syntax, here are some quick references for you: 
+# https://learn-the-web.algonquindesign.ca/topics/markdown-yaml-cheat-sheet/#yaml
+# https://learnxinyminutes.com/docs/yaml/
+#
+# Site settings
+# These are used to personalize your new site. If you look in the HTML files,
+# you will see them accessed via {{ site.title }}, {{ site.email }}, and so on.
+# You can create any custom variable you would like, and they will be accessible
+# in the templates via {{ site.myvariable }}.
+
+title: Oleg Loshkin
+email: loshkin.oleg.95@gmail.com
+author: Oleg Loshkin
+description: ""
+baseurl: /LoshkinOleg.github.io
+url: loshkinoleg.github.io
+github_username: LoshkinOleg
+show_downloads: false
+
+collections:
+  interviews:
+    output: true
+  cheatsheets:
+    output: true
+
+# Build settings
+theme: moonwalk
+
+theme_config:
+  appearance: "dark" # can be "light", "dark" or "auto"
+  appearance_toggle: false # if appearance can be switched by user
+  back_home_text: "To main page..." # customize text for homepage link in post layout
+  date_format: "%Y-%m-%d" # customize how date is formatted
+  show_description: false # show blog description
+  show_navbar: false # show horizontal navbar
+  show_footer: false # show footer links in home page,add in _data/home.yml
+  show_copyright: true # show copyright notice in footer
+  # options for "home" page
+  home:
+    title_projects: Projects
+    title_academic_publications: Academic Publications
+    title_blogposts: Blogposts
+    title_interviews: Interviews
+    title_cheatsheets: Cheatsheets
+
+highlighter: rouge
+
+sass:
+  style: compressed
+
 plugins:
-- jekyll-remote-theme
-title: [Oleg Loshkin's Blog]
-description: [I am Oleg Loshkin, a proactive and self-reliant Junior Game Programmer specializing in Audio Programming. I have graduated from the Geneva SAE Institute with a Bachelor of Science in Games Programming and wrote my bachelor thesis on real-time binaural sound spatialization.]
-show_downloads: [false]
+  - jekyll-feed
+  # - jekyll-soopr-seo-tag
+  # - jekyll-remote-theme
+
+# Exclude from processing.
+# The following items will not be processed, by default.
+# Any item listed under the `exclude:` key here will be automatically added to
+# the internal "default list".
+#
+# Excluded items can be processed by explicitly listing the directories or
+# their entries' file path in the `include:` list.
+#
+# exclude:
+#   - .sass-cache/
+#   - .jekyll-cache/
+#   - gemfiles/
+#   - Gemfile
+#   - Gemfile.lock
+#   - node_modules/
+#   - vendor/bundle/
+#   - vendor/cache/
+#   - vendor/gems/
+#   - vendor/ruby/
