@@ -24,6 +24,7 @@ author: Oleg Loshkin
 description: ""
 url: https://loshkinoleg.github.io
 baseurl: ""
+assets_dir: "http://raw.githubusercontent.com/LoshkinOleg/LoshkinOleg.github.io/main/assets"
 github_username: LoshkinOleg
 show_downloads: false
 

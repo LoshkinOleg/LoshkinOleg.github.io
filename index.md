@@ -16,15 +16,15 @@ layout: home
 <h2>Contacts</h2>
 
 <a href="http://www.linkedin.com/in/oleg-loshkin">
-  <img align="left" width="120" height="120" src="https://raw.githubusercontent.com/LoshkinOleg/LoshkinOleg.github.io/main/assets/LI-In-Bug.png">
+  <img align="left" width="120" height="120" src="{{site.assets_dir}}/LI-In-Bug.png">
 </a>
 
 <a href="http://github.com/LoshkinOleg">
-  <img align="right" width="120" height="120" src="/Assets/Github-Mark-Light-120px-plus.png">
+  <img align="right" width="120" height="120" src="{{site.assets_dir}}/Github-Mark-Light-120px-plus.png">
 </a>
 
 <a href="mailto:loshkin.oleg.95@gmail.com">
-  <img align="center" width="120" height="120" src="/Assets/mail.png">
+  <img align="center" width="120" height="120" src="{{site.assets_dir}}/mail.png">
 </a>
 <p align="center">
   loshkin.oleg.95@gmail.com
