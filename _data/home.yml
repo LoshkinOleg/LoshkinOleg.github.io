@@ -33,7 +33,7 @@ cheatsheets_entries:
 
 academic_publications_entries:
   - title: "Bachelor of Science Thesis: Measuring the Impact of Rea-Time Binaural Sound Spatialization on Sound Localization."
-    url: http://github.com/LoshkinOleg/BachelorMPOleg/blob/master/ThesisFinal.pdf
+    url: http://raw.githubusercontent.com/LoshkinOleg/BachelorMPOleg/blob/master/ThesisFinal.pdf
 
 interviews_entries:
   - title: 2022.06.15 Interview with Dr. Hasan Baran Firat on Real-Time Sound Spatialization in VR
