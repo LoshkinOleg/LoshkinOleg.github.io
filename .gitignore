@@ -7,5 +7,4 @@ vendor
 .bundle
 .sass-cache
 .git
-.jekyll-cache
 .vs

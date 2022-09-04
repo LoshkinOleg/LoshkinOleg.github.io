@@ -22,8 +22,7 @@ title: Oleg Loshkin
 email: loshkin.oleg.95@gmail.com
 author: Oleg Loshkin
 description: ""
-baseurl: /LoshkinOleg.github.io
-url: loshkinoleg.github.io
+url: https://loshkinoleg.github.io
 github_username: LoshkinOleg
 show_downloads: false
 
@@ -61,7 +60,7 @@ sass:
 plugins:
   - jekyll-feed
   - jekyll-remote-theme
-  - jekyll-seo-tag
+  - jekyll-soopr-seo-tag
 
 # Exclude from processing.
 # The following items will not be processed, by default.
