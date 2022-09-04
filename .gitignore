@@ -9,4 +9,3 @@ vendor
 .git
 .jekyll-cache
 .vs
-Gemfile.lock

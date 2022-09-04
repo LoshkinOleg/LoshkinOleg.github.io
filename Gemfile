@@ -1,3 +1,6 @@
+source "https://rubygems.org"
+gemspec
+
 # Ruby doesn't come with webrick by default anymore, so we're adding it manually
 gem "webrick"
 
