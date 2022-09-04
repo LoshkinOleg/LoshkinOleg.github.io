@@ -16,7 +16,7 @@ layout: home
 <h2>Contacts</h2>
 
 <a href="http://www.linkedin.com/in/oleg-loshkin">
-  <img align="left" width="120" height="120" src="https://raw.githubusercontent.com/LoshkinOleg/LoshkinOleg.github.io/Assets/LI-In-Bug.png">
+  <img align="left" width="120" height="120" src="https://raw.githubusercontent.com/LoshkinOleg/LoshkinOleg.github.io/master/Assets/LI-In-Bug.png">
 </a>
 
 <a href="http://github.com/LoshkinOleg">
