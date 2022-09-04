@@ -1,7 +1,4 @@
 ---
-# Feel free to add content and custom Front Matter to this file.
-# To modify the layout, see https://jekyllrb.com/docs/themes/#overriding-theme-defaults
-
 layout: home
 ---
 <p align="justified">
@@ -20,7 +17,7 @@ layout: home
 </a>
 
 <a href="http://github.com/LoshkinOleg">
-  <img align="right" width="120" height="120" src="{{site.assets_dir}}/Github-Mark-Light-120px-plus.png">
+  <img align="right" width="120" height="120" src="{{site.assets_dir}}/GitHub-Mark-Light-120px-plus.png">
 </a>
 
 <a href="mailto:loshkin.oleg.95@gmail.com">

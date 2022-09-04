@@ -34,11 +34,11 @@ These are the techniques used in the demo in no particular order:
 ### Instancing
 Instancing simply consists in re-using the same per-vertex data to draw multiple instances of a mesh in different places using a single draw call. This is the default behaviour of the engine. The only exception is the drawing of the skybox.
 
-<img align="center" width="960" height="523" src="/Assets/Blogposts/Old_Blogposts/GPR5300_TechnicalDocumentation/instancing.png">
+<img align="center" width="960" height="523" src="{{site.assets_dir}}/Blogposts/Old_Blogposts/GPR5300_TechnicalDocumentation/instancing.png">
 
 This technique comes in particularly handy for things like particle systems. In this demo, a single particle consists of a mesh of 3 intersecting planes with an alpha texture used to draw the shape of a star on each plane:
 
-<img align="center" width="539" height="487" src="/Assets/Blogposts/Old_Blogposts/GPR5300_TechnicalDocumentation/particle_mesh.png">
+<img align="center" width="539" height="487" src="{{site.assets_dir}}/Blogposts/Old_Blogposts/GPR5300_TechnicalDocumentation/particle_mesh.png">
 
 This same mesh is simply instanced 512 times in my case: the per-vertex data is loaded into the GPU's memory once at initialization and the dynamic per-instance data of 3 floats representing the position of the mesh is transfered to the GPU once every frame, resulting in a total transfer of 6'144 bytes. Each particle is then colored in the fragment shader using it's gl_InstanceId as input to give them differing colors.
 The vertex shader input ends up therefore looking something like this:
@@ -52,23 +52,23 @@ layout (location = 1) in vec3 ModelPosition; // Changes for every instance.
 Although the scene is simple enough not to warrant an such an optimization, every time a Model is drawn, the user is given the option to perform a culling pass using the camera's frustum to determine which instances of the Model need to be updated and displayed. In the case of this engine the use of this pass is less to limit the number of draw calls, as with instancing this isn't an issue, but rather to limit the amount of dynamic data that needs to be transferred to the GPU every frame.
 This optimization should do little when the number of instances of a Model is small as the most lengthy operation in such a scenario would be the wait on the GPU, but should get more effective as the number of instances grow.
 
-<img align="center" width="1160" height="1378" src="/Assets/Blogposts/Old_Blogposts/GPR5300_TechnicalDocumentation/dynamic_data_transfer.png">
+<img align="center" width="1160" height="1378" src="{{site.assets_dir}}/Blogposts/Old_Blogposts/GPR5300_TechnicalDocumentation/dynamic_data_transfer.png">
 
 A list of instances to draw can be easily established thusly: only the instances whose position relative to the camera's position lays inside the camera's frustum need to be drawn. To know whether an object is within the frustum, all we need to do is examine the geometric projection of the object's position vector onto the vectors normal to the planes that make up the frustum. This is easilly comprehensible when considering the frustum's Z axis:
 
-<img align="center" width="600" height="580" src="/Assets/Blogposts/Old_Blogposts/GPR5300_TechnicalDocumentation/frustum_z.png">
+<img align="center" width="600" height="580" src="{{site.assets_dir}}/Blogposts/Old_Blogposts/GPR5300_TechnicalDocumentation/frustum_z.png">
 
 We can see that the object COULD only be within the frustum's bound only if the projection of the blue vector is greater than the Z coordinate of the near plane AND smaller than the Z coordinate of the far plane. The blue vector is given by: ObjectPosition - CameraPosition. The red vector is the Front vector of the camera.
 Similarly, the same comparison is to be done for each of the side planes of the frustum:
 
-<img align="center" width="600" height="480" src="/Assets/Blogposts/Old_Blogposts/GPR5300_TechnicalDocumentation/frustum_sides.png">
+<img align="center" width="600" height="480" src="{{site.assets_dir}}/Blogposts/Old_Blogposts/GPR5300_TechnicalDocumentation/frustum_sides.png">
 
 As you can see, this time if the projection of the blue vector on the red one is greater than zero, there's no way the object could be inside the frustum. This time, the red vector is given by rotating the camera's Left vector by FOV/2 degrees counter-clockwise. This can easily be done using glm::angleAxis(radian, axis).
 
 ### Shape interpolation
 Shape interpolation is a very simple technique that allows a shape to be interpolated between two other shapes on the condition that the vertices of the two other shapes have a one-to-one correspondance:
 
-<img align="center" width="500" height="440" src="/Assets/Blogposts/Old_Blogposts/GPR5300_TechnicalDocumentation/morphing.png">
+<img align="center" width="500" height="440" src="{{site.assets_dir}}/Blogposts/Old_Blogposts/GPR5300_TechnicalDocumentation/morphing.png">
 
 Here, we have two targets. One is a red pentagon with 5 vertices. The other a blue triangle with 5 vertices as well but two of them are located on the triangle's sides. If we pass these two sets of data to the vertex shader as well as an arbitrary interpolation factor, we can create a third shape, drawn here in black that is a mixture of the pentagram and the triangle.
 
@@ -81,9 +81,9 @@ All objects in the scene that are shaded using the Blinn-Phong's lighting model 
 The rendering pass is separated between a geometry pass and a shading pass. The geometry pass gathers all the data relevant for computing the lighting and writes it to 4 separate targets: one for a fragment's albedo, one for it's position, one for it's normal and one for the material's shininess.
 The shading pass then takes these inputs as textures and computes the lighting for the whole screen, so no needless lighting computation is performed: all pixels thusly rendered are guaranteed to be the ones displayed on screen.
 
-<img align="center" width="500" height="358" src="/Assets/Blogposts/Old_Blogposts/GPR5300_TechnicalDocumentation/deferred_albedo.png"><br>
-<img align="center" width="500" height="358" src="/Assets/Blogposts/Old_Blogposts/GPR5300_TechnicalDocumentation/deferred_positions.png"><br>
-<img align="center" width="500" height="358" src="/Assets/Blogposts/Old_Blogposts/GPR5300_TechnicalDocumentation/deferred_normals.png">
+<img align="center" width="500" height="358" src="{{site.assets_dir}}/Blogposts/Old_Blogposts/GPR5300_TechnicalDocumentation/deferred_albedo.png"><br>
+<img align="center" width="500" height="358" src="{{site.assets_dir}}/Blogposts/Old_Blogposts/GPR5300_TechnicalDocumentation/deferred_positions.png"><br>
+<img align="center" width="500" height="358" src="{{site.assets_dir}}/Blogposts/Old_Blogposts/GPR5300_TechnicalDocumentation/deferred_normals.png">
 
 ### Bloom effect
 During the shading pass, a bloom effect is applied globally to the whole screen. The basic idea behind a bloom effect is simple: in addition to drawing the scene as usual, draw a copy of it onto a second texture but only the pixels that are brighter than some arbitrary value. Blur this second texture and combine it with the first result of the shading pass and you end up with something like this:
@@ -107,9 +107,9 @@ This gives satisfying results and simply adds a small extra step into the existi
 This demo also has three brick textured spheres that cast shadows on each other. To achieve this, a simple shadow map for a directional light was used.
 The idea is simple: draw the scene once before the lighting pass and keep only the depth values but with the scene seen from the directional light's point of view. Once at the shading stage, compare the pixel's current depth value with the one stored in the shadow map. If the fragment's current depth as seen from the light's perspective is greater than the one that is stored in the depth map at the same location, it means that the current fragment is in shadow.
 
-<img align="center" width="240" height="210" src="/Assets/Blogposts/Old_Blogposts/GPR5300_TechnicalDocumentation/shadowmap.png">
+<img align="center" width="240" height="210" src="{{site.assets_dir}}/Blogposts/Old_Blogposts/GPR5300_TechnicalDocumentation/shadowmap.png">
 <br>
-<img align="center" width="435" height="253" src="/Assets/Blogposts/Old_Blogposts/GPR5300_TechnicalDocumentation/scene_spheres.png">
+<img align="center" width="435" height="253" src="{{site.assets_dir}}/Blogposts/Old_Blogposts/GPR5300_TechnicalDocumentation/scene_spheres.png">
 
 ## The Demo
 A .zip package is provided in the [release](https://github.com/LoshkinOleg/gameEngine/releases/tag/1) section of the repository containing a standalone demo that uses the rendering engine to showcase a simple scene.
@@ -118,7 +118,7 @@ Once the demo is launched, the camera automatically moves along the world's Z ax
 #### 1. The morphing horse
 A disembodied [horse's head](https://free3d.com/3d-model/a-horse-with-a-big-tush-498195.html) is shown to transition between it's default aspect and a "spherifyed" version of the mesh:
 
-<img align="center" width="256" height="256" src="/Assets/Blogposts/Old_Blogposts/GPR5300_TechnicalDocumentation/scene_horse.gif">
+<img align="center" width="256" height="256" src="{{site.assets_dir}}/Blogposts/Old_Blogposts/GPR5300_TechnicalDocumentation/scene_horse.gif">
 
 This is a demonstration of [shape interpolation](https://en.wikipedia.org/wiki/Morph_target_animation), a very simple technique where the values of a vertex are interpolated between two shapes with the exact same amount of vertices. The vertex shader simply interpolated between the two vertices to obtain the final vertex:
 
@@ -135,23 +135,23 @@ void main()
 #### 2. The particle system
 A bunch of stars are shown to fly up into the air in a "trumpet" like shape:
 This is done with some simple instancing and trigonometric functions. Each particle's position is updated every frame and the buffer containing the positions of all the particles is sent over to the GPU once per frame. An instancing command is then issued and the particles are drawn using the new positions.
-<img align="center" width="563" height="639" src="/Assets/Blogposts/Old_Blogposts/GPR5300_TechnicalDocumentation/scene_particles.png">
+<img align="center" width="563" height="639" src="{{site.assets_dir}}/Blogposts/Old_Blogposts/GPR5300_TechnicalDocumentation/scene_particles.png">
 
 #### 3. The reflective diamond
 A spinning diamond is shown to reflect the skybox. The reflected color is boosted to make the diamond appear brighter and cause some blooming effect when the bright sky is reflected.
 The reflection is done via the use of glsl's built-in [reflect](https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/reflect.xhtml) function, the resulting reflection vector being used to sample the skybox's cubemap.
-<img align="center" width="337" height="273" src="/Assets/Blogposts/Old_Blogposts/GPR5300_TechnicalDocumentation/scene_diamond.png">
+<img align="center" width="337" height="273" src="{{site.assets_dir}}/Blogposts/Old_Blogposts/GPR5300_TechnicalDocumentation/scene_diamond.png">
 
 #### 4. The shadow casting spheres
 Three orbiting spheres are shown to cast shadows on each other as they orbit:
 This is done via [shadowmapping](https://learnopengl.com/Advanced-Lighting/Shadows/Shadow-Mapping).
-<img align="center" width="435" height="253" src="/Assets/Blogposts/Old_Blogposts/GPR5300_TechnicalDocumentation/scene_spheres.png">
+<img align="center" width="435" height="253" src="{{site.assets_dir}}/Blogposts/Old_Blogposts/GPR5300_TechnicalDocumentation/scene_spheres.png">
 
 #### 5. The normalmapped cube
 A brick textured cube is shown to reflect light according to a geometry that is more complex than that contained in it's .obj file:
 This is done via simple [normalmapping](https://learnopengl.com/Advanced-Lighting/Normal-Mapping).
-<img align="center" width="428" height="370" src="/Assets/Blogposts/Old_Blogposts/GPR5300_TechnicalDocumentation/scene_cube.png">
+<img align="center" width="428" height="370" src="{{site.assets_dir}}/Blogposts/Old_Blogposts/GPR5300_TechnicalDocumentation/scene_cube.png">
 
 ### The demo's execution flow
 The high level view of the program's flow is as such:
-<img align="center" width="500" height="907" src="/Assets/Blogposts/Old_Blogposts/GPR5300_TechnicalDocumentation/demo_flow.png">
+<img align="center" width="500" height="907" src="{{site.assets_dir}}/Blogposts/Old_Blogposts/GPR5300_TechnicalDocumentation/demo_flow.png">
