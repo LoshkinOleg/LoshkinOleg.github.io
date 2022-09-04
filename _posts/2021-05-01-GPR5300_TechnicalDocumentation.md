@@ -34,7 +34,7 @@ These are the techniques used in the demo in no particular order:
 ### Instancing
 Instancing simply consists in re-using the same per-vertex data to draw multiple instances of a mesh in different places using a single draw call. This is the default behaviour of the engine. The only exception is the drawing of the skybox.
 
-<img align="center" width="960" height="523" src="/Assets/Blogposts/Old_Blogposts/GPR5300_TechnicalDocumentation/instancing.png">
+<img align="center" width="960" height="523" src="https://loshkinoleg.github.io/Assets/Blogposts/Old_Blogposts/GPR5300_TechnicalDocumentation/instancing.png">
 
 This technique comes in particularly handy for things like particle systems. In this demo, a single particle consists of a mesh of 3 intersecting planes with an alpha texture used to draw the shape of a star on each plane:
 
