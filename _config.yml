@@ -33,6 +33,8 @@ collections:
     output: true
   cheatsheets:
     output: true
+  projects_thumbnails:
+    output: true
 
 # Build settings
 remote_theme: abhinavs/moonwalk
