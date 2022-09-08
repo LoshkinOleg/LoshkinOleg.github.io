@@ -133,6 +133,7 @@ This is concurrency: doing lots of things at once.
 Parallelism is much simpler, it's like chopping up some scallions: you'd take a whole bunch of them and chop them
 all up at once, each motion of the knife cutting the whole bunch at once.
 
+-----
 
 <h1>
   Approximating PI
@@ -196,6 +197,8 @@ This makes this problem particualrly well suited to introduce you to the paralle
 with [race conditions](https://en.wikipedia.org/wiki/Race_condition).<br>
 That being said, as you'll see in a follow-up blogpost to this one, even our simple problem is affected by
 those factors, but for now and for the sake of simplicity, we'll just to turn the blind eye to those issues. One step at a time!
+
+-----
 
 <h1>
   Running the project
@@ -272,9 +275,16 @@ Now that we've made sure everything works as indended, go back to CMake's GUI ap
 code we just saw use "/Application/include/exercise.h" to approximate PI and if you now run the program again you'll see that all the
 approximations will be of 0 since it's not yet implemented.
 
+-----
+
 <h1>
   Let's get to implementing!
 </h1>
+<img align="center" width="475" height="322" src="{{site.assets_dir}}/Blogposts/MultithreadingInCplusplusApproximatingPi/typing.gif">
+<em>[Typing furiously, taken from GIFER](https://gifer.com/en/6nVp)
+<h2>
+  SingleThread()
+</h2>
 
 Enough of the boring stuff, let's get to writing some code! From now on, I'll explain step by step how to first implement a
 single-threaded PI-approximating function and then show you how you can take advantage of the highly parallel
@@ -284,4 +294,96 @@ only the tools provided by the standard C++ library (C++20 standard in our case)
 I highly encourage you to attempt this by yourself at first and only come back to this blogpost if you're stumped
 or need a hint for how to approach the next part of the task you're trying to do.
 
-WIP
+Go ahead and open up "/Application/include/exercise.h". Inside, you'll find the four partially implemented functions we'll be implementing in order:
+- SingleThread() will simply approximate PI entirely on the main thread, we'll be using it compare our other approaches against.
+- SimpleAsync() will be our first attempt at using std::async and stde::future to try to parallelize the algorithm implemented in SingleThread().
+- AsyncNoRef() will be a variation on the previous function. You'll see the details later how it differs from the previous function.
+- Threads() will use std::thread, std::future and std::promise to implement the same algorithm without using std::async.
+
+Let's start by implementing the simple single threaded version of the algorithm in SingleThread():
+<img align="center" width="649" height="170" src="{{site.assets_dir}}/Blogposts/MultithreadingInCplusplusApproximatingPi/singleThread0.PNG">
+
+I've maked where you should write your code with the TODO comment. Before it, you'll find the random number generator <em>e</em> and the uniform floats distribution <em>d</em> ranging between
+[-1;1[ ([1.0f is exclusive due to some quirk of the standard library](https://en.cppreference.com/w/cpp/numeric/random/uniform_real_distribution) but since we're working with floats, it
+shouldn't be much of a problem). Note that the random generator isn't [seeded](https://stats.stackexchange.com/questions/354373/what-exactly-is-a-seed-in-a-random-number-generator) for the purposes of this blogpost (but you can trying to seed it and see what happens! The issues you'll
+observe will be the subject of the next blogpost).
+There's also the <em>insideCircle</em> variable which we'll use to count the number of random points inside the unit circle. And at the bottom, of course, there's the return statement.
+
+Let's get to it then! The first step is simple enough: all we need is to generate a 2D point defined by two components <em>x</em> and <em>y</em> using the random number generator
+and check if it is inside the unit circle by computing the magnitude of the vector going from the origin to the point. Since the origin is by definition at (0;0), we can directly pass
+<em>x</em> and <em>y</em> to the Magnitude() function I've prepared for you.
+If the point is inside the circle, meaning if the magnitude is <= 1.0f, we'll increment the <em>insideCircle</em> counter.
+<img align="center" width="313" height="199" src="{{site.assets_dir}}/Blogposts/MultithreadingInCplusplusApproximatingPi/singleThread1.PNG">
+
+Very difficult, isn't it? All that's left is to apply the formula discussed earlier to approximate PI. Here we can use <em>iterations</em> in place of "Number of points inside the square"
+since any point resulting from a [1;1] ranging distribution will necessarily be part of a unit square:
+```
+PI = 4 * Number of points inside the circle / Number of points inside the square
+```
+<img align="center" width="426" height="23" src="{{site.assets_dir}}/Blogposts/MultithreadingInCplusplusApproximatingPi/singleThread2.PNG">
+
+And that's it for the SingleThread() function, really:
+<img align="center" width="486" height="100" src="{{site.assets_dir}}/Blogposts/MultithreadingInCplusplusApproximatingPi/singleThread3.PNG">
+
+Before we move on to implementing the other functions, let's briefly get familiar with easy_profiler's GUI application. Every time you run the program, it will output
+profiling data to "/build/profilerOutputs/session.prof". Let's take a look at it in easy_profiler's GUI application (if you try reading it with a text editor, you'll see that it's
+all binary data, so you need to use the GUI application to make sense of it.)
+Navigate to and run "/thirdparty/easy_profiler/bin/profilerApp/profiler_gui.exe" and open up "/build/profilerOutputs/session.prof" by clicking on the folder icon at the top-left of the
+window:
+<img align="center" width="638" height="502" src="{{site.assets_dir}}/Blogposts/MultithreadingInCplusplusApproximatingPi/singleThread4.PNG">
+
+Once it's opened, you'll be able to navigate in the timeline and see the little profiling blocks that were defined in the code using EASY_BLOCK macros.
+For now, as you can see, we've only got one thread running and if you mouse over the SingleThread profiling block, you'll see the time it has taken to execute our newly implemented function:
+<img align="center" width="677" height="337" src="{{site.assets_dir}}/Blogposts/MultithreadingInCplusplusApproximatingPi/singleThread5.PNG">
+
+When we'll start kicking off (meaning starting) new threads in the following functions, you'll see more threads there, and with easy_profiler, you'll be able to see which one
+runs when! I just want to point out that for the sake of lisibility of this blogpost, I've set my NR_OF_WORKERS to 4 instead of the 14 my machine is capable of as I've advised before.
+
+<h2>
+  SimpleAsync()
+</h2>
+
+Since we know that approximating PI using the Monte Carlo method is an embarassingly parallel problem, let's try to make a version of our above function that splits
+the workload of approximating PI into as many separate threads to effectively use the whole CPU for the task rather than a single core.
+To do this, we'll start by using the simplest multithreading facility provided to us by the C++ standard: the [std::async](https://en.cppreference.com/w/cpp/thread/async).
+Those familiar with Unity Engine's C# coroutines will probably find the concept quite similar: std::async's allow you to define some arbitrary bit of code to execute and then launch it
+asynchronously, then retrieve the result of the execution when it has finished executing if necessary using a [std::future](https://en.cppreference.com/w/cpp/thread/future).
+
+While std::async's are easy to use, it's important to remember that they are <strong>NOT guaranteed</strong> to execute the task on a separate core, that decision is left up to the operating system.
+As such, the std::async are great when you just need to kick off some asynchronous task and don't really care about the details of where and how that task is running.
+A typical use of this facility in video-games would for instance be the loading of assets used in a level while the game is displaying a loading screen for the player:
+we wouldn't want the program to just freeze for ~10 seconds, making the player think that the game has crashed when in reality it's just loading a large amount of data from
+the disk. Let's try to use them, shall we? 
+
+<img align="center" width="630" height="114" src="{{site.assets_dir}}/Blogposts/MultithreadingInCplusplusApproximatingPi/simpleAsync0.PNG">
+
+For those not familiar with this kind of notation, it's called a [lambda expression](https://en.cppreference.com/w/cpp/language/lambda). If you're not aware of it, think of it as a
+local function (which it isn't actually by the way) where we'll be defining what one of our worker threads should be doing.
+We'll be capturing <em>e</em> and <em>d</em> [by reference](https://riptutorial.com/cplusplus/example/1951/capture-by-reference) to get it inside the lambda's scope: it's an argument
+that should be common to all the worker subroutines. Since <em>iterations</em> and <em>nrOfWorkers</em> are just 64-bit wide unsigned integers, we'll just pass them as regular arguments
+instead, by value. The subroutine should return the number of points inside the unit circle for the subset of the total workload it has processed.
+
+All of this is already written for you, your task is to simply re-implement the PI approximating algorithm, but this time only process 1/NR_OF_WORKERS'th of the total workload.
+Spoilers, this is how you do it:
+<img align="center" width="442" height="297" src="{{site.assets_dir}}/Blogposts/MultithreadingInCplusplusApproximatingPi/simpleAsync1.PNG">
+
+The only thing we've changed is that instead of processing the whole <em>iterations</em> number of iterations, it's only processing 1/NR_OF_WORKERS'th of it. Since <em>e</em> is
+captured by reference, the numbers generated for each subroutine <strong>should</strong> be different (but if you're aware of memory sharing concerns, you can already see why this
+approach is problematic, but that's for the next blogpost).
+
+Now that we've defined what our worker threads should be doing, let's kick them off so that they actually execute the code we've written. It's important to note that if you're launching
+an std::async task with the std::launch::async argument, the destructor of the returned std::future becomes a blocking
+operation, meaning that the main thread will not continue execution until the asynchronous task is done which would turn our hopefully parallel operation into a sequential
+one, so it's important to store the std::futures aside until we need to retireve the results and not just kick off an std::async and discarding the std::future (which we need in our case
+anyways since our subroutine returns a value):
+<img align="center" width="757" height="110" src="{{site.assets_dir}}/Blogposts/MultithreadingInCplusplusApproximatingPi/simpleAsync2.PNG">
+
+Now that we've kicked these tasks off, let's wait for them to finish executing and retrieve the results and use them to approximate PI, just as before. Note that the [std::future.get()](https://en.cppreference.com/w/cpp/thread/future/get)
+is a blocking operation that only returns once the subroutine has computed a valid result.
+<img align="center" width="665" height="178" src="{{site.assets_dir}}/Blogposts/MultithreadingInCplusplusApproximatingPi/simpleAsync3.PNG">
+
+Good, let's launch our program and see how it performs... uh oh:
+<img align="center" width="665" height="178" src="{{site.assets_dir}}/Blogposts/MultithreadingInCplusplusApproximatingPi/simpleAsync3.PNG">
+
+
+<strong>TODO: image of a well behaved cat besides some yarn</strong>
