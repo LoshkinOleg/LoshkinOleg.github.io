@@ -5,9 +5,12 @@ layout: post
 categories: blogpost
 permalink: /:categories/:title
 ---
+
+TODO: relire, corriger et formatter
+
 <br>
 <img align="center" width="675" height="488" src="{{site.assets_dir}}/Blogposts/MultithreadingInCplusplusApproximatingPi/catYarn.jpg">
-<em>["She didn't anticipate the yarn fighting back"](https://www.reddit.com/r/aww/comments/8ush6f/she_didnt_anticipate_the_yarn_fighting_back/)
+<em>["She didn't anticipate the yarn fighting back"](https://www.reddit.com/r/aww/comments/8ush6f/she_didnt_anticipate_the_yarn_fighting_back/)</em>
 <br>
 <br>
 Hi, I'm Oleg, I'm a freshly graduated Audio Games Programming Bachelor and while reviewing C++ multithreading and multiprocessing,
@@ -39,6 +42,9 @@ Although not all necessarily mentioned in the text, the following learning resou
 making of this blogpost and I encourage you to read them yourself:
 - [Estimating the value of Pi using Monte Carlo, GeeksforGeeks, updated on July 2022](https://www.geeksforgeeks.org/estimating-value-pi-using-monte-carlo/)
 - [CppCon 2018 Jefferson Amstutz Compute More in Less Time Using C++ Simd Wrapper Libraries](https://youtu.be/8khWb-Bhhvs)
+- My personal bible: ["Game Engine Architecture" by Jason Gregory](https://www.gameenginebook.com/), I cannot recommend this book highly enough, if there's any topic you'll ever encounter as a Game Programmer, you'll most probably find inside a very concise
+explanation of the subject as well as references to other resources where you'll find more information on the subject.
+- [C++ Concurrency, Part 4 by Bartosz Milewski](https://youtu.be/o0pCft99K74?list=PL1835A90FC78FF8BE)
 
 Finally, this blogpost uses various images, the sources of which have been marked below them.
 Care has been taken to use the images in accordance with the creator's wishes whenever such information
@@ -78,8 +84,7 @@ open up your task manager:
 
 <img align="center" width="674" height="620" src="{{site.assets_dir}}/Blogposts/MultithreadingInCplusplusApproximatingPi/taskManager.png">
 <br>
-This is because the OS is using what is called [timeslicing](https://en.wikipedia.org/wiki/Preemption_(computing)) to let every program a little bit
-of time on the CPU to execute partially before letting another program run.
+This is because the OS is using what is called [timeslicing and preemptive scheduling](https://en.wikipedia.org/wiki/Preemption_(computing)) to let every program a little bit of time on the CPU to execute partially before letting another program run.
 
 <h2>
   Multiprocessing
@@ -112,7 +117,7 @@ General-purpose GPU computing however is well beyond the scope of this blogpost.
 <em>[Die of the Nividia's GT200 GPU](https://www.realworldtech.com/gt200/11/)
 
 <h2>
-  Concurrency vs. Parallelism
+  Concurrency vs. Parallelism vs. Multi-tasking
 </h2>
 
 <img align="center" width="680" height="333" src="{{site.assets_dir}}/Blogposts/MultithreadingInCplusplusApproximatingPi/parallelismVsConcurrency.jpg">
@@ -121,17 +126,25 @@ General-purpose GPU computing however is well beyond the scope of this blogpost.
 Concurrency and parallelism can sound like synonyms but they are not. Rob Pike, the creator of the [Go programming language](https://en.wikipedia.org/wiki/Go_(programming_language))
 described the concepts very elegantly in [one of his talks](https://go.dev/talks/2012/waza.slide#8):
 <p><em>
-  "Concurrency is about dealing with lots of things at once. Parallelism is about doing lots of things once."<br>
+  "Concurrency is about <strong>dealing</strong> with lots of things at once. Parallelism is about doing lots of things, <strong>once</strong>."<br>
   </em></p>
 
 To give a more concrete and relatable example, concurrency is like cooking a stew: you might start by cutting some beef
 and while it's sizzling in a pan pour some water in a pot and set it to boil. While that's going on, you'd chop up
-some vegetables and at some point throw all of that good stuff in the boiling water and maybe add some flour.
+some vegetables and at some point throw all of that good stuff in the boiling water and maybe add some flour to thicken up
+the stew before adding in the beef.
 You might then after a while put the pot in the oven for a few hours and in the meantime you'd make some potatoes and some homemade sauce.
 This is concurrency: doing lots of things at once.
 
 Parallelism is much simpler, it's like chopping up some scallions: you'd take a whole bunch of them and chop them
 all up at once, each motion of the knife cutting the whole bunch at once.
+
+Multi-tasking is somewhat similar to concurrency in that, as it's name indicates, it involves doing multiple things at once
+but unlike concurrency, it does not involve sharing any resources with the other things being done at the same time:
+in our analogy, it's like listening to music while cooking, whether or not the pot of water is boiling or not has no impact on the
+music. If you didn't water in the pot however, it doesn't make sense to add in our vegetables,
+so there's a dependancy there.
+I highly recommend [Jason Gregory's "Game Engine Architecture"](https://www.gameenginebook.com/) book which has a large chapter dedicated to concurrency, multithreading and parallelism.
 
 -----
 
@@ -167,7 +180,7 @@ If we then simplify the expression, we end up with this equation:
 Area of circle / Area of square = PI / 4
 ```
 
-<strong>TODO: insert image of unit circle and square</strong>
+<img align="center" width="512" height="512" src="{{site.assets_dir}}/Blogposts/MultithreadingInCplusplusApproximatingPi/unitCircleAndSquare.png">
 
 Since we're generating A LOT of points, as the number of random points grows,
 we can approximate the above equation instead with the following one:
@@ -340,7 +353,7 @@ When we'll start kicking off (meaning starting) new threads in the following fun
 runs when! I just want to point out that for the sake of lisibility of this blogpost, I've set my NR_OF_WORKERS to 4 instead of the 14 my machine is capable of as I've advised before.
 
 <h2>
-  SimpleAsync()
+  Async()
 </h2>
 
 Since we know that approximating PI using the Monte Carlo method is an embarassingly parallel problem, let's try to make a version of our above function that splits
@@ -365,11 +378,11 @@ instead, by value. The subroutine should return the number of points inside the 
 
 All of this is already written for you, your task is to simply re-implement the PI approximating algorithm, but this time only process 1/NR_OF_WORKERS'th of the total workload.
 Spoilers, this is how you do it:
-<img align="center" width="442" height="297" src="{{site.assets_dir}}/Blogposts/MultithreadingInCplusplusApproximatingPi/simpleAsync1.PNG">
+<img align="center" width="761" height="292" src="{{site.assets_dir}}/Blogposts/MultithreadingInCplusplusApproximatingPi/simpleAsync1.PNG">
 
-The only thing we've changed is that instead of processing the whole <em>iterations</em> number of iterations, it's only processing 1/NR_OF_WORKERS'th of it. Since <em>e</em> is
-captured by reference, the numbers generated for each subroutine <strong>should</strong> be different (but if you're aware of memory sharing concerns, you can already see why this
-approach is problematic, but that's for the next blogpost).
+The only thing we've changed is that instead of processing the whole <em>iterations</em> number of iterations, it's only processing 1/NR_OF_WORKERS'th of it and
+we are now [seeding](https://en.cppreference.com/w/cpp/numeric/random/mersenne_twister_engine/mersenne_twister_engine) the random number generator to avoid all subroutines generating the same exact numbers, effectively making our PI
+approximation NR_OF_WORKERS times less precise.
 
 Now that we've defined what our worker threads should be doing, let's kick them off so that they actually execute the code we've written. It's important to note that if you're launching
 an std::async task with the std::launch::async argument, the destructor of the returned std::future becomes a blocking
@@ -382,8 +395,79 @@ Now that we've kicked these tasks off, let's wait for them to finish executing a
 is a blocking operation that only returns once the subroutine has computed a valid result.
 <img align="center" width="665" height="178" src="{{site.assets_dir}}/Blogposts/MultithreadingInCplusplusApproximatingPi/simpleAsync3.PNG">
 
-Good, let's launch our program and see how it performs... uh oh:
-<img align="center" width="665" height="178" src="{{site.assets_dir}}/Blogposts/MultithreadingInCplusplusApproximatingPi/simpleAsync3.PNG">
+Good, let's launch our program and see how it performs... looking good:
+<img align="center" width="725" height="112" src="{{site.assets_dir}}/Blogposts/MultithreadingInCplusplusApproximatingPi/simpleAsync4.png">
 
+We can see that, as expected, the OS has kicked off these tasks on separate threads, but again, that is not guaranteed when using std::async.
+To demonstrate this, I've forced the OS's hand by splitting the workload into twice the number of logical cores my CPU has, and as expected,
+the OS has decided to execute two subroutines per thread instead of one:
+<img align="center" width="534" height="124" src="{{site.assets_dir}}/Blogposts/MultithreadingInCplusplusApproximatingPi/simpleAsync5.png">
 
-<strong>TODO: image of a well behaved cat besides some yarn</strong>
+This is usually the desired behaviour since the OS knows best how to distribute the computing workload the machine is experiencing
+at any given time. But what if we want to make sure that one thread is only responsible for one thing, as would be the case for instance in
+a multithreaded game engine, where it is typical to have a graphical renderer thread or an IO thread or an audio thread, all of them responsible for one
+specific task only? For nerds, this is an instance of [task parallelism](https://en.wikipedia.org/wiki/Task_parallelism) by the way as opposed to
+[data parallelism](https://en.wikipedia.org/wiki/Data_parallelism) which is what we're doing with approximating PI.
+
+<h2>
+  Thread()
+</h2>
+<img align="center" width="768" height="432" src="{{site.assets_dir}}/Blogposts/MultithreadingInCplusplusApproximatingPi/yarn.jpg">
+<em>[Designed by Freepik](https://www.freepik.com/free-photo/multiple-colored-partially-unwounded-balls-yarn-white-paper-top-view_13854421.htm#query=knitting%20yarn&position=6&from_view=keyword)
+
+To do so, we need to go just a little bit lower and start using std::thread's: this C++ facility is used to
+represent a single thread of execution of a program and when a task is assigned to it, it won't share
+it's execution time with any other tasks, unlike an std::async.
+Note however that this DOES NOT map the thread to a CPU core! Trying to do so would involve fighting the OS'
+task scheduler and unless you're a senior OS software engineer (which you aren't since your reading this),
+you won't manage to outperform it.
+
+In game engines, std::thread's (or third-party equivalents of it) are usually used as part of so-called "worker thread pool",
+where the application, upon startup kicks off as many std::threads as there are logical cores and uses them in a
+more or less generic manner: adding more threads would only lead to the existing threads cannibalizing each other's
+time on the CPU and the only impact you'd see would be the cost added cost of [context switching](https://en.wikipedia.org/wiki/Context_switch) of running another thread. This is why I've instructed
+you to set NR_OF_WORKERS to the number of logical cores - 2.
+
+Implementing our algorithm using std::thread's is very similar to using std::async's, the only real difference is that
+you can't directly get a return value from std::thread's constructor like you can with std::async, you need to first
+construct a std::promise, get the std::future from it instead, then std::move it as an argument for the lambda:
+
+Other than that, everything is very similar besides having to call .join() or .detach() on the thread. The .join()
+is a blocking call that waits for the std::thread to execute and .detach() is used to let the std::thread execute
+unchecked so that the main thread may continue on with it's execution without waiting on it. Since std::future.get() is
+a blocking call that will wait for the return value of the subroutine to become valid anyways, in our case we can call
+either:
+
+<img align="center" width="790" height="553" src="{{site.assets_dir}}/Blogposts/MultithreadingInCplusplusApproximatingPi/threads0.png">
+
+This time, even if we set NR_OF_WORKERS to a number larger than the number of logical cores, we can see that each subroutine
+is running on it's own little thread. What is hidden away from us is that the OS uses timeslicing to run all of those
+little programs "simultaneously":
+
+<img align="center" width="538" height="895" src="{{site.assets_dir}}/Blogposts/MultithreadingInCplusplusApproximatingPi/threads1.png">
+
+And just for good measure, let's launch the application one last time in Release mode and look at the results with 14 worker
+threads in my case!:
+
+<img align="center" width="532" height="96" src="{{site.assets_dir}}/Blogposts/MultithreadingInCplusplusApproximatingPi/results0.png">
+<br>
+<img align="center" width="696" height="264" src="{{site.assets_dir}}/Blogposts/MultithreadingInCplusplusApproximatingPi/results1.png">
+
+-----
+
+<h1>
+  In Conclusion... this is only the beginning!
+</h1>
+
+This blogpost has barely scratched the surface of multithreading, concurrency, multi-tasking and parallelism.
+What we've done here has been an example of [data parallelism]() we've implemented using the concurrency facilities
+of C++ that have been designed to take advantage of a multiprocessing environment, so strictly speaking, we haven't even
+done anything concurrent since there was no sharing of common resources.
+
+The next blogpost will introduce the tricky challenge of sharing memory for concurrent problems, a topic not at all
+covered in this blogpost yet mandatory knowledge for any programmer.
+
+I hope this introduction to multithreading in C++ has been useful and stay curious!
+
+<img align="center" width="720" height="540" src="{{site.assets_dir}}/Blogposts/MultithreadingInCplusplusApproximatingPi/wellBehavedCats.jpg">
+<em>[Cats multithreading, taken from www.outsetmedia.com](https://www.outsetmedia.com/puzzles/cobble-hill/275-piece/ragdolls)
