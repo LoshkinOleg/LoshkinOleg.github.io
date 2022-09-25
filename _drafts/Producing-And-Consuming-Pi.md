@@ -154,39 +154,244 @@ But that's enough theory for now, let's get our hands dirty! First, clone [the r
 
 https://github.com/LoshkinOleg/Multithreading_In_Cplusplus_Producing_And_Consuming_PI
 
-Note that while this project compiles on Linux, easy_profiler has issues with tracking [context switch]() events on that platform, making the profiler's use limited on that platform.
+Note that while this project compiles on Linux, easy_profiler has issues with tracking [context switching](https://en.wikipedia.org/wiki/Context_switch)
+events on that platform, making the profiler's use limited on that platform.
 
 If you're on Windows, just like last time, make an out-of-source build under "/build" using the CMake's GUI and generate a Visual Studio solution and open it after you've ran "moveDlls.bat" to move the dlls in the right place.
 
 Once you've got the project running with the default CMake settings, you should get an output like so:
 
-TODO: screen cap of console
+<img align="center" width="616" height="396" src="{{site.assets_dir}}/Blogposts/MultithreadingInCplusplusProducingAndConsumingPi/projSetup0.png">
+
+Let me explain this output real quick. You'll be implementing four (or three, really, you'll see) ways to [produce and consume](https://en.wikipedia.org/wiki/Producer%E2%80%93consumer_problem)
+individual digits of PI: the "Producer" functions will generate digits of PI at a given position and identify themselves and "Consumer" functions will
+also identify themselves and append all of these things to a string output.
+In the last line of the example above for instance, you can see that a Consumer with id "5" has recieved from Producer with id "4" a PI digit of "2".
+
+To make more sense of this, let's take a look at the contents of the "/Application/src/main.cpp" file. The first lines you should already be familiar with, they define
+whether to run the implementation that I've provided ("/Application/include/workingImplementation.h") or your own implementation ("/Application/include/exercise.h").
+Next is a threads pool and an array defining the indices of the PI digits to Produce:
+
+<img align="center" width="621" height="212" src="{{site.assets_dir}}/Blogposts/MultithreadingInCplusplusProducingAndConsumingPi/projSetup1.png">
+
+Next is a function that will reset all the variables between runs of different producing and consuming approaches. The variables it resets that you don't see in
+this current file come from the implementation headers. The function just resets variables to their default values and randomizes <em>iterations</em>, the order in which
+the digits of PI will be Produced:
+
+<img align="center" width="616" height="161" src="{{site.assets_dir}}/Blogposts/MultithreadingInCplusplusProducingAndConsumingPi/projSetup2.png">
+
+This might seem like an odd way to structure things but you'll see why we're doing things this way below: it's to better demonstrate the properties of std::mutex
+and std::condition_variable.
+
+Finally comes the main function, and you're already familiar with the start and the end of the function: it's just some easy_profiler code that initializes the profiler
+and writes the results to disk. In between, you've got calls to the functions you'll be implementing:
+
+<img align="center" width="629" height="218" src="{{site.assets_dir}}/Blogposts/MultithreadingInCplusplusProducingAndConsumingPi/projSetup3.png">
+
+For our purposes, we'll be Producing and Consuming the first 7 digits of PI, but the order of PI digits will be random (thanks to the use of <em>iterations</em>).
+This is done to emphasize that while some code like this might coincidentally work as expected:
+
+```
+for (size_t i = 0; i <= LAST_DIGIT; i++)
+{
+	threads.push_back(std::thread(NoMutex_Producer, i));
+	threads.push_back(std::thread(NoMutex_Consumer, i));
+}
+for (auto& thread : threads)
+{
+	thread.join();
+}
+```
+
+It is <strong>not guaranteed</strong> to work. Explicitly shuffling the order of the push_back's like we're doing here makes this point obvious.
+
+Now that you've seen how the main logic of the Application works, go ahead and uncheck the USE_WORKING_IMPLEMENTATION define in CMake GUI and let's take a look at
+the part of the code you'll actually be implementing, which is contained within "/Application/include/exercise.h":
+
+<img align="center" width="594" height="629" src="{{site.assets_dir}}/Blogposts/MultithreadingInCplusplusProducingAndConsumingPi/projSetup4.png">
+
+First, the included header "/Application/digitsOfPi.h" contains a modified implementation of [Fabrice Bellard's implementation of the Bailey-Borwein-Plouffe formula](https://bellard.org/pi/pi1.c)
+used here to compute an arbitrary digit of PI. The details of this implementation are out of the scope of this blogpost (as well as out of my own understanding to be honest)
+but to sum it up: it's a very efficient algorithm allowing to compute an arbitrary set of digits of PI without having to compute all the part of PI that comes before
+the set of digits we're interested in.
+
+Next are some literals if you wish to change the range of PI to compute, I've chosen the first 7 digits because they're the ones we're most familiar with but the code
+should work just fine with any other positive values.
+
+The PieceOfPi struct is the data that Producers and Consumers will be passing to each other and it contains fields for the actual digit of PI and two fields allowing
+identification of the Consumers and Producers involved in a given transaction. It also has a method to be able to conveniently print it.
+
+Next up is the MessWithCompiler function which, as it's name indicates, makes the code from which it is called from unpredictable both for the compiler and the CPU:
+it introduces a random delay in the execution that varies between 0 and 25 milliseconds. We'll be using this function to ensure that our code is capable to withstand
+unpredictable delays and unpredictable order of execution of threads.
+
+Finally, we've got the first three global variables we'll be using to implement the regular, non-multithreaded approach of our producer-consumer problem.
+The <em>buffer</em> variable is the unit of PI that will be passed from Producer to Consumer at a time, <em>toPrint</em> is a string that the Consumers will append
+their results to and <em>iteration</em> will be used to define the next digit of PI to Produce.
 
 -----
 
 <h1>Let's Write some Code!</h1>
 TODO: fun image
 
-<h2>Singlethreaded Implementation</h2>
+Alright, enough theory, let's go to coding stuff! Just like in the previous blogpost, I've marked the areas where you should be writing code with descriptive TODO's,
+so feel free to attempt all of those things by yourself first and come back to this blogpost if you're stuck!
 
-todo: sync not needed for BBP
+<h2>SingleThreaded and NoMutex Implementations</h2>
+
+Let's start with a SingleThreaded, sequential implementation. I doubt you'll have any trouble implementing this first approach, as a reminder, this is how
+SingleThreaded_Producer and SingleThreaded_Consumer functions are used in main:
+
+```
+Reset();
+std::cout << "Using SingleThreaded functions to generate digits of PI..." << std::endl;
+for (size_t i = FIRST_DIGIT; i <= LAST_DIGIT; i++)
+{
+	SingleThreaded_Producer(i);
+	SingleThreaded_Consumer(i);
+}
+std::cout << toPrint << std::endl;
+```
+
+Once implemented, the two functions should look like this:
+
+<img align="center" width="586" height="288" src="{{site.assets_dir}}/Blogposts/MultithreadingInCplusplusProducingAndConsumingPi/singleThreaded0.png">
+
+And if you run the Application, you should have the following output:
+
+<img align="center" width="472" height="159" src="{{site.assets_dir}}/Blogposts/MultithreadingInCplusplusProducingAndConsumingPi/singleThreaded1.png">
+
+At this point, you could insert some MessWithCompiler calls if you want to ensure that this implementation will work no matter what: it is all executed sequentially,
+so any unpredictable delays will have no effect on the result. You can see for yourself that right now, everything is done on a single thread and sequentially using
+easy_profiler's GUI:
+
+<img align="center" width="616" height="23" src="{{site.assets_dir}}/Blogposts/MultithreadingInCplusplusProducingAndConsumingPi/singleThreaded2.png">
+
+Now that we've got our SingleThreaded implementation working, let's see what happens if we try to do the same exact thing, but this time concurrently with 14 threads,
+one to Produce and one to Consume a PieceOfPi, per digit. Let's just copy paste the same code in the NoMutex functions at their appropriate places:
+
+<img align="center" width="651" height="269" src="{{site.assets_dir}}/Blogposts/MultithreadingInCplusplusProducingAndConsumingPi/noMutex0.png">
+
+Uh-oh! This time, I didn't even have to uncomment the MessWithCompiler call to force a data race I had left in case things accidentally worked as intended!:
+
+<img align="center" width="418" height="162" src="{{site.assets_dir}}/Blogposts/MultithreadingInCplusplusProducingAndConsumingPi/noMutex1.png">
+
+So what's going on here? Let's see if we can get any clues by looking at the results of the profiler (I did introduce an artificial 1 ms extra delay in the functions
+just so that we could better see what's going on):
+
+<img align="center" width="617" height="358" src="{{site.assets_dir}}/Blogposts/MultithreadingInCplusplusProducingAndConsumingPi/noMutex2.png">
+
+Ah. Without a way to make operations [atomic](https://en.wikipedia.org/wiki/Atomicity_(programming)), meaning <strong>unable to be interrupted</strong>.
+Right now, all of our threads are technically allowed to execute the same code all at the same time, using shared resources (<em>buffer</em>, <em>toPrint</em>
+and <em>iteration</em>). Clearly, this is a [critical](https://en.wikipedia.org/wiki/Critical_section) operation, meaning one that <em>should not be interrupted</em>!
+In our case, since we're not protecting our shared resources, we end up with all threads running simultaneously, reading and writing to the shared resources unchecked!
 
 <h2>Making Things Atomic</h2>
 
+Well, let's try to remedy to this situation then: let's use a [std::mutex](https://en.cppreference.com/w/cpp/thread/mutex)! I've already defined a global mutex
+named <em>m</em> for you, all you have to do is use it in the MutexOnly functions <strong>before</strong> operating on whatever resources you're trying to protect.
+To do so, you have to "lock" the mutex using one of the [C++ locks](https://en.cppreference.com/w/cpp/thread).
+To know what lock you need to use, here's a brief introduction of the most useful C++ locks:
+- The [unique lock](https://en.cppreference.com/w/cpp/thread/unique_lock) is a very generic kind of mutex lock that can be [.lock()](https://en.cppreference.com/w/cpp/thread/unique_lock/lock)'ed
+and [.unlock()](https://en.cppreference.com/w/cpp/thread/unique_lock/unlock)'ed any number of times, though usually you wouldn't do that yourself, the standard does that
+for you. You should only use this kind of lock when it is required, when using std::condition_variable's for instance.
+- The [lock_guard](https://en.cppreference.com/w/cpp/thread/lock_guard) and it's successor the [scoped_lock](https://en.cppreference.com/w/cpp/thread/scoped_lock) do
+very similar things: they both <strong>lock once</strong> at construction and <strong>unlock once</strong> at destruction. This should make them your go-to locks since
+locking a mutex involves a [kernel call](https://en.wikipedia.org/wiki/System_call), which is relatively expensive. The distinction between the two locks is that the
+lock_guard is only capable of locking a single mutex at a time (leaving the possibility of a [deadlock](https://en.wikipedia.org/wiki/Deadlock)) whereas a
+scoped_lock can safely lock multiple mutexes if needed. So between the two, use the scoped_lock unless you need a lock_guard for some legacy reasons.
+- Finally, the [shared_lock](https://en.cppreference.com/w/cpp/thread/shared_lock) is a very useful type of lock because it does not actually completely immobilise
+the protected shared resource: a mutex locked by a shared_lock can still be used by other threads as long as all users of the mutex are <em>reading</em> from the protected
+resource and not modifying it. You can think of the shared_lock as a "read-only lock" if you wish, as long as you're not modifying anything, locking a shared_lock
+does not involve an expensive kernel call. Use shared_locks when you only need to read from a shared resource.
+
+The useful thing about mutexes is that as their name indicates, locking them is mutually exclusive: <strong>only one</strong> thread can ever lock a mutex, and therefore
+it's associated resources, at a time, making whatever operations you might perform on these shared resources atomic.
+
+Keep in mind that when using the standard C++ locks, whenever you instanciate a lock it is automatically .lock()'ed unless you specify otherwise, as can be done with
+unique locks. The opposite is also true, by default, when a lock goes out of scope, it's destructor unlocks the mutex.
+I will not explain those in depth here, but you should also be aware that not all mutex locking operations are [blocking](https://en.wikipedia.org/wiki/Blocking_(computing)),
+unique_lock's and shared_lock's also have [.try_lock()](https://en.cppreference.com/w/cpp/thread/unique_lock/try_lock) methods (and its variations) which can be used for
+[polling](https://en.wikipedia.org/wiki/Polling_(computer_science)) based locking, but you can still end up with a [livelock](https://en.wikipedia.org/wiki/Deadlock)
+instead of a deadlock.
+
+But what does all of this mean for our code? Well that we'll be using a scoped_lock in both the Producer and Consumer functions (the consumer modifies <em>buffer</em> and <em>toPrint</em>
+so we can't use a shared_lock there unfortunately!):
+
+<img align="center" width="576" height="438" src="{{site.assets_dir}}/Blogposts/MultithreadingInCplusplusProducingAndConsumingPi/mutexOnly0.png">
+
+Let's run it and see what happens!:
+
+<img align="center" width="439" height="154" src="{{site.assets_dir}}/Blogposts/MultithreadingInCplusplusProducingAndConsumingPi/mutexOnly1.png">
+
+That's still not right. Let's take a look at the outputs of the profiler:
+
+<img align="center" width="657" height="346" src="{{site.assets_dir}}/Blogposts/MultithreadingInCplusplusProducingAndConsumingPi/mutexOnly2.png">
+
+While we did make our operations atomic by using the mutex, the operations are still executed in the wrong order! The very first function to execute is a Consumer, which
+understandably has nothing to consume, resulting in the "digit: " output and if you look at the two last functions to get called, they're both Producers!
+This is because a mutex has only one effect on the order of operations: it makes the operations <em>sequential</em> and that is it. For our PI producing and consuming to work
+we need one more additional tool.
+
 <h2>Putting some Order</h2>
+TODO: fun image
+
+So, what is our secret weapon that will allow us to organize this unpredictable order of execution into something orderly you might ask? Introducing: the
+[std::condition_variable](https://en.cppreference.com/w/cpp/thread/condition_variable)!
+A condition_variable is a construct that allows different threads to notify each other that <em>something</em> has happened. A condition_variable works alongside a
+mutex to put a thread to sleep (a.k.a. to block it) but instead of being woken up whenever the locked resource becomes available again, it is woken up upon receiving
+a notification via the condition_variable.
+
+In C++, you use them like so:
+
+```
+std::unique_lock<std::mutex> lck(m); // Mutex is locked in the constructor here.
+cv.wait(lck, []{ return somePredicate; }); // Mutex is implicitly unlocked by the compiler here.
+// Mutex is implicitly locked again by the complier here.
+DoThings();
+```
+
+And some other thread will be responsible for waking up the sleeping thread by calling the following:
+```
+cv.notify_one(); // Or cv.notify_all() to wake up every thread .wait()'ing on the cv
+```
+
+Note that while it is technically not required to provide a predicate (some condition to check) to the .wait() method, practically, doing so is mandatory due to
+[spurious wakeups](https://en.wikipedia.org/wiki/Spurious_wakeup):
+your thread might wake up unexpectedly when they shouldn't due to some quirks of the OS, so if they do, providing them with a way to check whether they
+should actually
+continue execution or not is pretty much mandatory.
+Note also that this is pretty much the only case when it's okay to call .wait() while holding a lock because the condition_variable locks/unlocks the mutex
+it's using automatically, doing so in most other situations would result in a deadlock.
+
+We'll be using two condition_variable's since we want the Producers to wake up Consumers and vice-versa, if we used only one condtion_variable, we couldn't specify
+whether a Producer or a Consumer should be woken up. So with all of this said, this is what the code final working PI producing and consuming code looks like!
+(despite our best efforts to break it):
+
+<img align="center" width="582" height="879" src="{{site.assets_dir}}/Blogposts/MultithreadingInCplusplusProducingAndConsumingPi/cv0.png">
+
+And this results in the correct series of digits as we can see:
+
+<img align="center" width="381" height="154" src="{{site.assets_dir}}/Blogposts/MultithreadingInCplusplusProducingAndConsumingPi/cv1.png">
+
+We can confirm this by looking at the results of the easy_profiler:
+
+<img align="center" width="709" height="268" src="{{site.assets_dir}}/Blogposts/MultithreadingInCplusplusProducingAndConsumingPi/cv2.png">
 
 -----
 
-<h1>To Sum Things Up</h1>
+<h1>There's Always More!</h1>
 TODO: fun image
 
-<h2>There's Always More!</h2>
+As much as I would have liked to tell you that this is all you need to know to write good multithreaded code, that's unfortunately not the case. What I've presented
+here barely scratches the surface of the complexities of making multithreaded programs work but I hope that with these two blogposts you now have the bare essentials
+to make a multithreaded program and more importantly, that you've got now some references you can follow up on to learn more.
 
-Flynn taxonomy
-atomic, volatile, counting and binary semaphore, barriers, fences,
-cooperative scheduling, fibers, coroutines, branch prediction, OS basics (interrupts, kernel calls, preemptive multitasking, kernel vs user space)
-livelock, starvation, priority inversion, the dining philosphers
-lock-free concurrency
-spin-locks, reentrant locks
+If you want one more little exercise to understand the difference between concurrency and parallelism and it's applications, I invite you to answer a question
+for yourself: can you make the code we've just written [lock-free](https://en.wikipedia.org/wiki/Non-blocking_algorithm) (fancy way of saying without using
+mutexes and locks)? Could you still do it if instead of using [Bailey-Borwein-Plouffe](https://en.wikipedia.org/wiki/Bailey%E2%80%93Borwein%E2%80%93Plouffe_formula)'s formula for computing PI,
+we had used another method for computing PI, such as the [Leibniz formula for PI](https://en.wikipedia.org/wiki/Madhava-Leibniz_series)?
+
+I hope this blogpost has taught you something new and useful and stay curious!
 
 TODO: fun image
