@@ -23,3 +23,33 @@ Obviously install the packages that all of those headers come from.
 /usr/include/webkitgtk-4.1
 /usr/include/libsoup-3.0
 ```
+
+# Adding visual elements to your application.
+
+- When you make a member component inheriting from juce::Component, don't forget to declare it with JUCE:
+```
+class MyComponent : public juce::Component{
+public:
+	void paint(juce::Graphics&) override;
+	void resize() override;
+private:
+	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(MyComponent)
+};
+
+class MyJuceWindow : public juce::Component
+MyJuceWindow::MyJuceWindow()
+{
+public:
+	MyJuceWindow()
+	{
+		addAndMakeVisible(myComponent_);
+	}
+
+	void paint(juce::Graphics&) override;
+	void resize() override;
+private:
+	MyComponent myComponent_;
+
+	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(MyJuceWindow)
+};
+```
