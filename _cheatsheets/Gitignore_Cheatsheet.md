@@ -5,9 +5,9 @@ categories: "cheatsheets"
 permalink: /:categories/:title
 ---
 
-.git/
-.vs/
-*/.vs/
-.vscode/
-*/__pycache__/
+.git/<br>
+.vs/<br>
+*/.vs/<br>
+.vscode/<br>
+"*/__pycache__/"<br>
 [Bb]build/
