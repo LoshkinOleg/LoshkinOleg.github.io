@@ -2,8 +2,7 @@
 layout: home
 ---
 <p align="justified">
-  I am a proactive and self-reliant Junior Game Audio Programmer. I have graduated from the SAE Institute of Geneva with a first-class Bachelor of Science degree in Games Programming.<br>
-  I aspire to incorporate the exciting new (or not-so-new) technologies of real-time sound simulation into future video-games.
+  I am a proactive and self-reliant Junior Game Programmer. I have graduated from the SAE Institute of Geneva with a first-class Bachelor of Science degree in Games Programming and I have a keen interest in Game Audio.<br>
 </p>
 
 <h2 align="center">
