@@ -2,7 +2,7 @@
 layout: home
 ---
 <p align="justified">
-  I am a proactive and self-reliant Junior Game Programmer. I have graduated from the SAE Institute of Geneva with a first-class Bachelor of Science degree in Games Programming and I have a keen interest in Game Audio.<br>
+  I am a proactive and self-reliant Junior Game Programmer. I have graduated from the SAE Institute of Geneva with a Bachelor of Science degree (1st class with honors) in Games Programming and I have a keen interest in Game Audio.<br>
 </p>
 
 <h2 align="center">
