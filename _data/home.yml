@@ -1,4 +1,9 @@
 projects_entries:
+  - title: 2022-11-18 - Ongoing Scout Game Engine
+    url: https://github.com/LoshkinOleg/ScoutGameEngine
+    desc: "A barebones collection of C/C++ modules developped for personal experimentation."
+    image: projects_thumbnails/scoot.png
+  
   - title: 2022-08-19 DFT and Frequency Domain Sandbox
     url: https://github.com/LoshkinOleg/DFT_There_And_Back_Again
     desc: "Application used in the blogpost The Frequency Domain: Or, There and Back Again. Allows you to construct time and frequency domain signals and visualize them in 3D."
