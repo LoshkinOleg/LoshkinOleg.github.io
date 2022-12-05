@@ -1,8 +1,8 @@
 projects_entries:
-  - title: 2022-11-18 - Ongoing Scout Game Engine
-    url: https://github.com/LoshkinOleg/ScoutGameEngine
-    desc: "A barebones collection of C/C++ modules developped for personal experimentation."
-    image: projects_thumbnails/scoot.png
+  - title: 2022-12-05 Receiver Clone
+    url: https://github.com/LoshkinOleg/UnrealRevolver
+    desc: "A project imitating Receiver's in-depth gun manipulation made with Unreal."
+    image: projects_thumbnails/revolver.png
   
   - title: 2022-08-19 DFT and Frequency Domain Sandbox
     url: https://github.com/LoshkinOleg/DFT_There_And_Back_Again
