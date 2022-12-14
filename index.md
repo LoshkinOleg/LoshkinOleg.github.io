@@ -6,7 +6,7 @@ layout: home
 </p>
 
 <h2 align="center">
-  <a href="{{site.assets_dir}}/CV_OlegLoshkin.pdf">My Curriculum Vitae / Resume</a>
+  <a href="http://raw.githubusercontent.com/LoshkinOleg/LoshkinOleg.github.io/main/assets/CV_OlegLoshkin.pdf">My Curriculum Vitae / Resume</a>
 </h2>
 
 <h2>Contacts</h2>
