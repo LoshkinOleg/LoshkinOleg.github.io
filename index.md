@@ -2,7 +2,7 @@
 layout: home
 ---
 <p align="justified">
-  I am a proactive and self-reliant Junior Game Programmer. I have graduated from the SAE Institute of Geneva with a Bachelor of Science degree (1st class with honors) in Games Programming and I have a keen interest in Game Audio.<br>
+  I am Oleg Loshkin, a proactive and self-reliant Junior Game Programmer specializing in Game Audio Programming. I have graduated from the Geneva SAE Institute with a first-class Bachelor of Science in Games Programming and wrote my bachelor thesis on real-time binaural sound spatialization.<br>
 </p>
 
 <h2 align="center">
