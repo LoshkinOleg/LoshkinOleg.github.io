@@ -1,4 +1,9 @@
 projects_entries:
+  - title: 2024-07-26 Wéko: The Mask Gatherer
+    url: https://store.steampowered.com/app/1682290/Weko_The_Mask_Gatherer/
+    desc: "An action adventure game developped at Siro Games sàrl. In it, I occupied the role of principal programmer during it's last 18 months of development."
+    image: projects_thumbnails/weko.png
+
   - title: 2022-12-05 Receiver Clone
     url: https://github.com/LoshkinOleg/UnrealRevolver
     desc: "A project imitating Receiver's in-depth gun manipulation made with Unreal."
@@ -23,11 +28,6 @@ projects_entries:
     url: https://loshkinoleg.itch.io/the-paratroopers-1
     desc: A game made during the Game Design module of the SAE's course. Made with Unity.
     image: projects_thumbnails/paratroopers1Thumbnail.png
-
-  - title: 2018-10-01 Winter Rush
-    url: https://loshkinoleg.itch.io/winter-rush
-    desc: A game made during the Game Design module of the SAE's course. Made with Unity.
-    image: projects_thumbnails/winterRushThumbnail.png
 
 blogposts_entries:
   - title: Blog posts
