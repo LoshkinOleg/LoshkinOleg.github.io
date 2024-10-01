@@ -27,7 +27,7 @@ ul.horizontal-list {
   align-items: center;
   background-color: var(--bg-secondary);
   margin-bottom: 0.8em;
-  border-radius: 0.8em;
+  border-radius: 0.5em;
 
   .header {
     color: var(--links);
@@ -35,12 +35,6 @@ ul.horizontal-list {
 
   .body {
     font-size: 0.8em;
-  }
-
-  .footer {
-      position: absolute;
-      left: 0;
-      bottom: 0;
   }
 
   hr {

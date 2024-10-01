@@ -2,7 +2,7 @@
 
 Gem::Specification.new do |spec|
   spec.name          = "moonwalk"
-  spec.version       = "0.1.1"
+  spec.version       = "0.1.3"
   spec.authors       = ["Abhinav Saxena"]
   spec.email         = ["abhinav061@gmail.com"]
 
@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.homepage      = "https://github.com/abhinavs/moonwalk"
   spec.license       = "MIT"
 
-  spec.files         = `git ls-files -z`.split("\x0").select { |f| f.match(%r!^(assets|_interviews|_cheatsheets|_layouts|_includes|_sass|LICENSE|README|_config\.yml)!i) }
+  spec.files         = `git ls-files -z`.split("\x0").select { |f| f.match(%r!^(assets|_layouts|_includes|_sass|LICENSE|README|_config\.yml)!i) }
 
   spec.add_runtime_dependency "jekyll", "~> 4.2.0"
   spec.add_runtime_dependency "jekyll-feed", "~> 0.15.0"
