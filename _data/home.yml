@@ -9,9 +9,9 @@ navbar_entries:
     url: https://www.abhinav.co
 
 projects_entries:
-  - title: Wéko: The Mask Gatherer # 2024-07-26 Wéko: The Mask Gatherer
+  - title: Receiver Clone # 2024-07-26 Wéko: The Mask Gatherer
     url: https://store.steampowered.com/app/1682290/Weko_The_Mask_Gatherer/
-    desc: "An action adventure game developped at Siro Games sàrl. In it, I occupied the role of principal programmer during it's last 18 months of development."
+    desc: "A project imitating Receiver's in-depth gun manipulation made with Unreal." # "An action adventure game developped at Siro Games sàrl. In it, I occupied the role of principal programmer during it's last 18 months of development."
     # image: projects_thumbnails/weko.png
 
   - title: Receiver Clone # 2022-12-05 Receiver Clone
