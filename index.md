@@ -2,11 +2,11 @@
 layout: home
 ---
 <p align="justified">
-  I am Oleg Loshkin, a proactive and self-reliant Junior Game Programmer specializing in Game Audio Programming. I have graduated from the Geneva SAE Institute with a first-class Bachelor of Science in Games Programming and wrote my bachelor thesis on real-time binaural sound spatialization.<br>
+   I am a well-organized and detail-oriented gameplay programmer with close to two years of experience. Conscientious yet pragmatic, I thrive when my work allows my teammates to bring their creative ideas to life.
 </p>
 
 <h2 align="center">
-  <a href="https://drive.google.com/file/d/1TwhtW0YW6RnUSQZOd49M9POhh3l72LxA/view?usp=sharing">My Curriculum Vitae / Resume</a>
+  <a href="{{site.assets_dir}}/CV/CV_OlegLoshkin.pdf">My Curriculum Vitae / Resume</a>
 </h2>
 
 <h2>Contacts</h2>
