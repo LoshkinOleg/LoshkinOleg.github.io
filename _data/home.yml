@@ -1,63 +1,101 @@
-projects_entries:
-  - title: 2024-07-26 Wéko: The Mask Gatherer
-    url: https://store.steampowered.com/app/1682290/Weko_The_Mask_Gatherer/
-    desc: "An action adventure game developped at Siro Games sàrl. In it, I occupied the role of principal programmer during it's last 18 months of development."
-    image: projects_thumbnails/weko.png
+navbar_entries:
+  - title: about
+    url: about
 
-  - title: 2022-12-05 Receiver Clone
-    url: https://github.com/LoshkinOleg/UnrealRevolver
-    desc: "A project imitating Receiver's in-depth gun manipulation made with Unreal."
-    image: projects_thumbnails/revolver.png
-  
-  - title: 2022-08-19 DFT and Frequency Domain Sandbox
-    url: https://github.com/LoshkinOleg/DFT_There_And_Back_Again
-    desc: "Application used in the blogpost The Frequency Domain: Or, There and Back Again. Allows you to construct time and frequency domain signals and visualize them in 3D."
-    image: projects_thumbnails/dftThumbnail.PNG
+  - title: blog
+    url: blog
 
-  - title: 2022-06-30 Voliday
-    url: https://volcanoteam.itch.io/voliday
-    desc: An 8-month student project involving >32 people, including Game Programming, Game Art and Sound Engineering students from the SAE Institute of Geneva. I've acted as the Project Lead for this project.
-    image: projects_thumbnails/volidayThumbnail.PNG
+  - title: website
+    url: https://www.abhinav.co
 
-  - title: 2018-11-01 The Paratroppers 2
-    url: https://loshkinoleg.itch.io/the-paratroopers-2
-    desc: The final game made during the Game Design module of the SAE's course. Made with Unity.
-    image: projects_thumbnails/paratroopers2Thumbnail.png
+project_entries:
+  - title: Project 1
+    url: overview-post
+    desc: This is an example project, configured in _data/home.yml
 
-  - title: 2018-10-01 The Paratroppers
-    url: https://loshkinoleg.itch.io/the-paratroopers-1
-    desc: A game made during the Game Design module of the SAE's course. Made with Unity.
-    image: projects_thumbnails/paratroopers1Thumbnail.png
+  - title: Project 2
+    url: overview-post
+    desc: Projects are shown in card layout
 
-blogposts_entries:
+  - title: Project 3
+    url: overview-post
+    desc: You can control visibility from _config.yml file
+
+  - title: Project 4
+    url: overview-post
+    desc: This project uses highlight markup, configured in _data/home.yml
+    highlight: WIP
+
+  - title: Project 5
+    url: overview-post
+    desc: Moonwalk also has horizontal list (used in header and footer)
+    highlight: WIP
+
+  - title: Project 6
+    url: overview-post
+    desc: It also has a scalable vertical list (in case you need it)
+
+old_project_entries:
+  - title: Soopr
+    url: https://www.soopr.co
+    desc: Delight your readers - add beautiful share and like buttons easily to your websites 
+    highlight: NEW
+
+  - title: Cookie
+    url: https://github.com/abhinavs/cookie
+    desc: An open source landing website with supporting pages and integrated blog
+
+  - title: Moonwalk
+    url: https://github.com/abhinavs/moonwalk
+    desc: A fast and minimalist Jekyll blog theme with clean dark mode
+
+  - title: Humangous
+    url: https://www.humangous.co
+    desc: The better people know you, the better they collaborate
+
+footer_entries:
+  - title: abhinav's homepage
+    url: https://www.abhinav.co
+
+  - title: twitter
+    url: https://twitter.com/abhinav
+
+  - title: github
+    url: https://github.com/abhinavs
+
+  - title: feed
+    url: feed.xml
+
+misc_entries:
+  - title: this is an example vertical list
+    url: false
+
+  - title: you can show or hide using a boolean flag in _config.yml
+    url: false
+
+  - title: and you can add data in _data/home.yml
+    url: false
+
   - title: Blog posts
     post_list: true
     url: false
 
-cheatsheets_entries:
-  - title: CMakeLists Cheatsheet
-    url: cheatsheets/CMakeLists_Cheatsheet
+  - title: moonwalk on the Internet
+    url: false
+    entries:
+      - title: on Github
+        url: https://github.com/abhinavs/moonwalk
 
-  - title: OpenGL Enums Cheatsheet
-    url: cheatsheets/OpenGL_Enums_Cheatsheet
-    
-  - title: JUCE Applications Building Cheatsheet
-    url: cheatsheets/Juce_App_Cheatsheet
-    
-  - title: Ubuntu Directories Cheatsheet
-    url: cheatsheets/Ubuntu_Directories_Cheatsheet
-    
-  - title: Gitignore Cheatsheet
-    url: cheatsheets/Gitignore_Cheatsheet
-    
-  - title: Unreal Cheatsheet
-    url: cheatsheets/Unreal_Cheatsheet
+      - title: originally built for abhinav's homepage
+        url: https://www.abhinav.co
 
-academic_publications_entries:
-  - title: "Bachelor of Science Thesis: Measuring the Impact of Rea-Time Binaural Sound Spatialization on Sound Localization."
-    url: assets/ThesisFinal.pdf
+      - title: this list is scalable and can be nested
+        url: false
+        entries:
+          - title: this is nested inside a nested list
+            url: false
 
-interviews_entries:
-  - title: 2022.06.15 Interview with Dr. Hasan Baran Firat on Real-Time Sound Spatialization in VR
-    url: interviews/Interview_With_Dr_Hasan_Baran_Firat
-    desc: Summary of the interview done as part of my Bachelor Thesis with Dr.Hasan Baran Firat.
+          - title: it is easy to use, see _data/home.yml to see how to configure it.
+            url: false
+
+
