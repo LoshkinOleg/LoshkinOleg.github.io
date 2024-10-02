@@ -7,14 +7,14 @@ permalink: /:categories/:title
 ---
 
 <br>
-<img align="center" width="674" height="446" src="{{site.assets_dir}}/Blogposts/FirstIndustryExperience/weko.png">
+<img align="center" width="460" height="215" src="{{site.assets_dir}}/Blogposts/FirstIndustryExperience/weko.png">
 <br>
 <br>
 
 This blog post is a retrospect on my time at **Siro Games** sàrl during the development of **Wéko: The Mask Gatherer**. So, a few introductions are in order. Firstly, Siro Games sàrl is a Geneva-based, Swiss indie game development company.
 <br>
 <br>
-##How it all began.
+## How it all began.
 <br>
 I arrived at the company thanks to [Lisa Manolache](https://www.linkedin.com/in/lisa-manolache-89a7b1197/), a talented Game Art classmate I had the pleasure of collaborating with during our last year at school.
 At the time, I had been looking for a job for about 5 months without much success: in such a competitive industry, it isn't easy for juniors to find any position. Luckily, Lisa had heard from Simon himself, one of the two founders of Siro Games, that they had been looking for "a dev" for the game. More precisely, it turns out that they were looking for a gameplay programming intern, and my profile fit the bill!
@@ -22,7 +22,7 @@ At the time, I had been looking for a job for about 5 months without much succes
 "Would you be able to help us with this particular project?"
 <br>
 <br>
-##Wéko: The Mask Gatherer.
+## Wéko: The Mask Gatherer.
 <br>
 The project in question was, of course, Wéko: The Mask Gatherer. Wéko was a project that was in the making for one and a half to two and a half years, depending on where you would consider its start to be.
 The genesis of it, according to Simon, was surrounded by what many such good ideas stem from: beer!<br>
@@ -31,14 +31,14 @@ Simon tells me of an evening when he and Robin, the other founder of Siro Games,
 And so, make a video game they did. Over the first two years, development went understandably slowly, as Simon and Robin learned the basics of Unreal Engine 4.27, the engine the duo had chosen for the game.
 Over time, Simon reduced his hours working at the bank to 50% and used the remaining 150% of his free time (who needs sleep anyways) to work on the project. Eventually, our crazy duo was joined by the very talented Quentin, the music composer of Wéko's OST, and Rimayé, the VFX wizard responsible for all the flashy and cool visual effects you can find in the game. <br>There were many others, of course, such as Liam, the cool theater kid who inexplicably figured out how to tweak and create animations for us, and the various people who helped us with translations later on, among others. If you want the full list of people who worked on this game, I encourage you to check out our game's credits (once you've bought it, of course)!
 <br><br>
-##Humble beginnings.
+## Humble beginnings.
 <br>
 By the time I had that interview with Simon, most of the core mechanics of the game were already there... kind of. While I did create quite a few mechanics and features from scratch, the majority of my time on the project was spent stabilizing and on rare occasions refactoring the existing code. Simon had experience with scripting, as I mentioned, but he lacked the rigor necessary to create the sizable, reliable game systems needed by this project. When I arrived, while most of the mechanics were present, they would fail to function properly one-third of the time or would consistently fail as soon as they interacted with each other, such as carrying an object and falling off a ledge. <br>Things were working "well enough" in isolation but would become completely unpredictable or outright game-breaking during the course of normal, multi-hour-spanning play.
 And so, when I arrived, a lot of time was spent organizing the existing code, and oh boy, that was NOT an easy task. <br>As a reminder, the project was now a year and a half worth of action-adventure game code cobbled together just enough to work most of the time, with little to no consideration given to basic good coding practices such as separation of concern or abstraction (worse yet, abstraction that does not actually abstract anything away). If I had needed to get the whole codebase in "proper" order, I would still be working on it today. With the given constraints however, that was simply not doable nor sensible. No, what I needed was to stabilize this castle of cards just enough for it to withstand 95% of the things that the player might throw at it, and the eyes of any programmer be damned!
 <br>Thus, my laborious task began. After a couple of game mechanic implementations that we didn't end up using, I got to work on Weko_BP, the player pawn's class, the monolith that grouped at least 30% of the game's code. After much despair, head-scratching, and harassing Simon, who had borne this thing into existence, I organized the player's code into a finite number of states, like "None," "Attacking," "OpeningDoor," "Dead," and so forth. With this, tracking down bugs slowly became easier, as we were now able to track the sequences of events that would lead the player to end up with member variables set to incoherent values for the current context of the game... most of the time. <br>Again, in all I did, I had to make careful consideration of what needed to be refactored and what was too fragile and intertwined with everything else to hope to rework within a reasonable amount of time. Where I couldn't rewrite things, either because that would take too much time or because I simply couldn't understand all the myriad of effects changing a single value would cascade into, I did my best to add failsafes, write sanity checks, and if all else failed, just comment everything for the next time my bug hunt would lead me to that particular piece of code.
 <br>After a few months of this, with Weko_BP as well as other similarly convoluted areas of the codebase, I was finally starting to get the big picture of what was happening in the game at any given moment... for most of the systems, anyway.
 <br><br>
-##Facing the monsters.
+## Facing the monsters.
 <br>
 While most of the systems I've had to work on were fairly straightforward once I poked around them for a while, some of them are still bordering on dark magic to this day. One of these major systems was the game's save system.
 I had arrived on the project right when Simon was implementing a saving mechanic into the game, and that was namely one of the reasons he needed a programmer. <br>Simon had followed the tutorials of a YouTuber called Reid (I unfortunately can't find the exact name anymore) and implemented a C++ save system in the project... but he didn't understand C++. So, of course, once things were inevitably broken, he was unable to fix the code to make it work for the project. Instead, for the parts that were broken, Simon ended up making a second save system, on the Blueprint side of the engine, just for those last bits of data that needed to be saved.
@@ -56,7 +56,7 @@ The most frustrating and bug-prone part of the inventory's code was the fact tha
 <br>And lastly, with the gamepad control schemes especially, a lot of care needed to be given to "focus" passing. In UMG, only the currently "focused" widget receives inputs from the player, unlike with Unreal's Actors, and so if the focus is lost, one way or the other, with a gamepad, that would essentially imply a softlock of the game. And of course, UMG does not provide a function to retrieve the currently focused widget to help the matters.
 <br>However, after much headache and a lot of lessons learned for the next project, that too, was stabilized. Not perfect by any stretch of the imagination, in fact, you can still perceive some oddities with the game's UI today if you pay good attention to it, but these oddities aside, the player is able to interact with the inventory and all of the related UI systems without bothersome bugs.
 <br><br>
-##And creating my own monsters.
+## And creating my own monsters.
 <br>
 What happens when you give an inexperienced, fresh-out-of-school programmer the responsibility of a new, major feature in a game? <br>That was the situation I had found myself in during the summer of 2023: the game finally was able to justify implementing bosses in the gameplay! Initially, 6 bosses were planned (just a small number for a small team, just small enough to handle while also developing the rest of the 6+ hours of an RPG's gameplay, of course), and so, the good programming student that I was, I immediately saw this as an opportunity to finally implement a nice, well-designed, reusable, and expandable system, the way a true programmer would! <br>At the time, we were also reworking the code of enemies of the game, and so, I saw this as an opportunity to harmonize things, take what already exists on the MasterEnemy_BP side of things, generalize it and build a system able to be used for bosses and regular enemies alike.
 And, it went exactly as you would expect. Luckily, with the time pressure and basic self-awareness, I did not spend weeks figuring out the best design for the task at hand, and I say luckily because as both the bosses and enemies would be iterated on, it became very clear that there was no way I would have been able to account for all of the requirements that such a system would entail with the little experience I had.
@@ -68,25 +68,25 @@ Such rigidity restrains creativity and most of the time, due to the very varied 
 
 This is a good example of one of the lessons I've learned in the making of this game: *"The better is the enemy of the good (enough)."* At school, we are understandably taught good programming practices and are taught the basics of good software design, but in reality, in small teams anyways and without much experience, the reality is that it's very difficult to justify "proper code" over "working code." I'm sure the situation is very different with a bigger team, of course.
 
-<img align="center" width="600" height="480" src="{{site.assets_dir}}/Blogposts/FirstIndustryExperience/cinos.png">
+<img align="center" width="1936" height="1024" src="{{site.assets_dir}}/Blogposts/FirstIndustryExperience/cinos.png">
 TODO: link to https://www.youtube.com/@CrankyTemplar 
 
 As an example of this, consider the following mechanic from our game: the boss jumps in the middle of the room and prepares to fire a big, one-shot-kill laser that sweeps the whole room, but conveniently also drops down two stalactites on either side of him that allow the player to survive the attack if they hide behind them.
 One problem that very quickly became obvious was that if the location of those two stalactites was left up to random chance, the player would often end up being hit by the falling stalactite and then swiftly killed by the laser as they get up. To fix that, it would be best to ensure that the two stalactites consistently spawn on either side of the boss on a line that is perpendicular to that formed by the position of the boss and the player: this way, the player doesn't get squished by the thing that is supposed to protect them and the two stalactites are always within a reasonable distance from the player to ensure that they can reach them on time.
 
-<img align="center" width="600" height="480" src="{{site.assets_dir}}/Blogposts/FirstIndustryExperience/idealStalagPos.png">
+<img align="center" width="761" height="739" src="{{site.assets_dir}}/Blogposts/FirstIndustryExperience/idealStalagPos.png">
 
 Now, what would be the proper way of computing the location of the two stalactites? Surely you'd need to use trigonometry and geometry to find these locations, take into account the rotation of the boss pawn, the direction of the player, and so on and so forth.
 <br>Or... how about we just generate one random position on a circle around the boss and check that it's not too close to the player? And if it is, eh, just generate another one. Then use that position to spawn one stalactite and compute the other position for the second stalactite on the other side of the boss, easy! What's that? The player still gets hit by the second stalactite because the first one has spawned behind the boss, relative to the player? Well, just check that the distance of the first stalactite is neither too large nor too small, and tada! You get stalactites that spawn on either side of the boss consistently and that do not crush the player when they appear.
 
-<img align="center" width="600" height="480" src="{{site.assets_dir}}/Blogposts/FirstIndustryExperience/hackStalagPos.png">
+<img align="center" width="761" height="739" src="{{site.assets_dir}}/Blogposts/FirstIndustryExperience/hackStalagPos.png">
 
 Now, when I described this solution to a junior classmate of mine, he very understandably facepalmed upon hearing that nonsense. Leaving the generation of a stalagtite position up to a random number generator that might fail to generate an appropriate position multiple times in a row? Inconcievable!
 But... that is currently how the stalactites of Cinos, the third boss of the game, spawn. Why? Because it works. Consistently even. And unlike with the "proper" approach to the problem, I did not have to sketch out and formulate it as a math problem, which is a good thing because that is not one of my strengths.
 
 Mind you, that does not at all mean that I couldn't figure out the proper way to solve that problem, just that it would have taken me more time than this one. But for what? To feel satisfied? <br>No, that time was much better spent debugging the rest of the game and implementing the rest of the mechanics. I am the only person who has had to touch that particular bit of code and it wasn't a feature that has been reused anywhere else, nor was this solution a weight on the performance of the game, it is just unsightly. But that, I guess, is how you make a small Zelda-like adventure game with only 5 people that has a playtime of over 6 hours.
 <br><br>
-##A pawn in the greater scheme of things.
+## A pawn in the greater scheme of things.
 <br>
 With this first industry experience, it was the first time that I occupied an important position in a project without having a major say in it. Up until then, for group projects, I had usually taken a leadership role, but arriving in this project halfway in, I, of course, assumed a more passive role. <br>Not that my input wasn't valued; quite the contrary, I've never felt like my suggestions or ideas were discarded unjustly, but having had some limited experience in making sure a project arrives at its term, it was a nice change to not have to worry about anything other than programming. This has really made me appreciate the invisible work that Simon and Robin have done during the time I was able to just focus on programming.
 
@@ -96,7 +96,7 @@ It is very hard to get a project going from the ground up when there isn't yet a
 
 Yet all of those things, Simon accomplished. I cannot express the respect I have for him and Robin for pulling all of this off. They very much are an inspiration and a striking example of the kind of mental strength it takes to create a game studio in the current industry. I am genuinely honored to have been able to work beside them.
 <br><br>
-##The bugs.
+## The bugs.
 <br>
 As a player of modern games, we are sadly pretty much accustomed to games launching as buggy messes, especially coming from certain AAA studios that shall remain unnamed. Up until the release of Weko, bugs were my greatest concern for our game. If these huge studios, with dedicated QA teams, talented programmers, and decades of experience, are consistently releasing games that are filled with game-breaking bugs at release, how could our small, inexperienced studio hope to do better?
 
@@ -104,7 +104,7 @@ All throughout the development of the game, I had the fear that upon release, de
 
 How could that be? Maybe we just got lucky. But perhaps what is being told on the consumer side of the video game community has some truth to it: that quality is being laid to the wayside in exchange for profits by certain studios. If a tiny studio like ours is capable of achieving a reasonably bug-free release with a game that is not inherently simple, it is frankly quite hard to defend those AAA studios that have all the budget, experience, and infrastructure to do better yet still choose to cut corners there.
 <br><br>
-##To put a bow on things.
+## To put a bow on things.
 <br>
 In summary, this first experience certainly didn't go the way I expected it to. <br>Coming out of school, I expected to be brought into a big team with seniors to teach me the ropes of some very technical subjects. Instead, I had joined a small team where I ended up being the most knowledgeable programmer as a junior and spent the overwhelming part of my time in Unreal's Blueprints instead of C++.
 <br>I had expected to be required to write very well-structured and designed code that respected all the best coding practices, but instead, I've rarely ever spent time designing systems and much more time hacking the existing codebase into something that would just get the job done without resulting in bugs for the player.
