@@ -1,6 +1,6 @@
 # Description
 Source code for my Github Pages [website](https://loshkinoleg.github.io/). It is a modified version of abhinavs' [Moonwalk theme](https://github.com/abhinavs/moonwalk) using [Jekyll](https://jekyllrb.com/).
-The theme's license can be found in the "Theme_LISENCE.txt" file.
+The theme's license can be found in the "LISENCE.txt" file.
 
 # Reminder on usage
 To be able to run server locally:
