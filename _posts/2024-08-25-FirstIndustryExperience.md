@@ -89,7 +89,7 @@ Such rigidity restrains creativity and most of the time, due to the very varied 
 This is a good example of one of the lessons I've learned in the making of this game: *"The better is the enemy of the good (enough)."* At school, we are understandably taught good programming practices and are taught the basics of good software design, but in reality, in small teams anyways and without much experience, the reality is that it's very difficult to justify "proper code" over "working code." I'm sure the situation is very different with a bigger team, of course.
 <br>
 <br>
-<img align="center" width="512" height="271" src="{{site.assets_dir}}/Blogposts/FirstIndustryExperience/cinos.png">
+<img align="center" width="512" height="271" src="{{site.assets_dir}}/Blogposts/FirstIndustryExperience/cinos.PNG">
 A screen capture of the Cinos fight by [CrankyTemplar](https://www.youtube.com/@CrankyTemplar).
 
 As an example of this, consider the following mechanic from our game: the boss jumps in the middle of the room and prepares to fire a big, one-shot-kill laser that sweeps the whole room, but conveniently also drops down two stalactites on either side of him that allow the player to survive the attack if they hide behind them.
