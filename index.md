@@ -12,7 +12,7 @@ layout: home
 <h2>Contacts</h2>
 
 <div>
-<iframe frameborder="0" src="https://itch.io/embed/3362357" width="552" height="167"><a href="https://sirogames.itch.io/testwebproject">TestWebProject by SiroGames</a></iframe>
+<iframe frameborder="0" src="https://itch.io/embed-upload/13002653?color=333333" allowfullscreen="" width="640" height="380"><a href="https://sirogames.itch.io/testwebproject">Play TestWebProject on itch.io</a></iframe>
 </div>
 
 <a href="http://www.linkedin.com/in/oleg-loshkin">
