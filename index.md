@@ -11,6 +11,10 @@ layout: home
 
 <h2>Contacts</h2>
 
+<div>
+<iframe frameborder="0" src="https://itch.io/embed/3362357" width="552" height="167"><a href="https://sirogames.itch.io/testwebproject">TestWebProject by SiroGames</a></iframe>
+</div>
+
 <a href="http://www.linkedin.com/in/oleg-loshkin">
   <img align="left" width="120" height="120" src="{{site.assets_dir}}/LI-In-Bug.png">
 </a>
